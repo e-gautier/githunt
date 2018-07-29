@@ -1,0 +1,13 @@
+.loader {
+    margin-top: 300px;
+    text-align: center;
+}
+
+.loader-small {
+    text-align: center;
+    width: 100%;
+}
+
+.text-loader {
+    display: block;
+}

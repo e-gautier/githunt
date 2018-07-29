@@ -1,0 +1,17 @@
+.card {
+    height: 220px;
+    margin-bottom: 20px;
+}
+
+a, a:hover {
+    color: #000000;
+    text-decoration: none;
+}
+
+.card-body {
+    overflow: auto;
+}
+
+.metadataText {
+    vertical-align: text-bottom;
+}
