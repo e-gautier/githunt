@@ -7,7 +7,7 @@ export default class Repo extends Component {
 
   render() {
     const license = this.props.license ? (
-      <div className="badge badge-light" >
+      <div className="badge badge-light" title="license">
         <FontAwesomeIcon icon={faGavel}/>
         &nbsp;
         <span className="metadataText">{this.props.license}</span>
@@ -25,17 +25,17 @@ export default class Repo extends Component {
           </div>
           <div className="card-footer text-muted">
             <div className="row align-self-center">
-              <div className="badge badge-light">
+              <div className="badge badge-light" title="forks">
                 <FontAwesomeIcon icon={faCodeBranch}/>
                 &nbsp;
                 <span className="metadataText">{this.props.forks}</span>
               </div>
-              <div className="badge badge-light">
+              <div className="badge badge-light" title="stars">
                 <FontAwesomeIcon icon={faStar}/>
                 &nbsp;
                 <span className="metadataText">{this.props.stars}</span>
               </div>
-              <div className="badge badge-light">
+              <div className="badge badge-light" title="issues">
                 <FontAwesomeIcon icon={faExclamationCircle}/>
                 &nbsp;
                 <span className="metadataText">{this.props.openIssues}</span>

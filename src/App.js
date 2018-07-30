@@ -64,7 +64,6 @@ class App extends Component {
           return response.json();
         } else {
           response.json().then((body) => {
-            console.log(body.message);
             this.setState({
               error: body.message,
               fetching: false

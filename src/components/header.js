@@ -39,15 +39,14 @@ export default class Header extends Component {
           closeAbout={this.closeAbout}
         />
         <div className="row">
-          <div className="col-4">
+          <div className="col">
             <div className="row title-container">
               <img src={logo} className="logo-main" alt="logo"/>
               <h1 className="title">Githunt</h1>
             </div>
             <span>Hunting the best GitHub projects</span>
           </div>
-          <div className="col-4"/>
-          <div className="col-4 options-container align-self-center">
+          <div className="col options-container align-self-center">
             <div className="row">
               <div className="col-5">
                 <select value={this.props.period} onChange={(event) => this.props.handlePeriodChange(event.target.value)} className="form-control">

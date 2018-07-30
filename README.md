@@ -1,3 +1,5 @@
 # Githunt
 
-Welcome traveler! Let's go hunting.
+Greetings traveler! Let's go hunting.
+
+![screenshot](src/assets/img/screenshot_Githunt.png)
