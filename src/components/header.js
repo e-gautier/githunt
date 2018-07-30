@@ -4,6 +4,8 @@ import '../assets/css/header.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSyncAlt, faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import ModalInfo from '../components/modalInfo';
+import {Row} from 'react-bootstrap';
+import app from '../../package.json';
 
 export default class Header extends Component {
 
@@ -38,16 +40,16 @@ export default class Header extends Component {
           openAbout={this.state.openAbout}
           closeAbout={this.closeAbout}
         />
-        <div className="row">
+        <Row>
           <div className="col">
-            <div className="row title-container">
+            <Row className="title-container">
               <img src={logo} className="logo-main" alt="logo"/>
-              <h1 className="title">Githunt</h1>
-            </div>
+              <h1 className="title">{app.name}</h1>
+            </Row>
             <span>Hunting the best GitHub projects</span>
           </div>
           <div className="col options-container align-self-center">
-            <div className="row">
+            <Row>
               <div className="col-5">
                 <select value={this.props.period} onChange={(event) => this.props.handlePeriodChange(event.target.value)} className="form-control">
                   <option value="daily">Daily</option>
@@ -71,9 +73,9 @@ export default class Header extends Component {
               <div className="col-1">
                 <FontAwesomeIcon onClick={this.openAbout} icon={faInfoCircle} size="lg" className="icon"/>
               </div>
-            </div>
+            </Row>
           </div>
-        </div>
+        </Row>
       </div>
     );
   }

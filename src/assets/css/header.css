@@ -7,6 +7,10 @@
     align-self: flex-end;
 }
 
+.title:first-letter {
+    text-transform: capitalize;
+}
+
 .title-container {
     display: flex;
 }

@@ -6,6 +6,7 @@ import app from '../../package.json';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBrush} from '@fortawesome/free-solid-svg-icons';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
+import { Button } from 'react-bootstrap';
 
 const styles = {
   content : {
@@ -22,7 +23,7 @@ Modal.setAppElement('#root');
 
 export default class ModalInfo extends Component {
 
-  GITHUNT_REPO = 'https://github.com/e-gautier';
+  GITHUNT_REPO = 'https://git.io/fN2H2';
 
   flushCache() {
     localStorage.clear();
@@ -45,9 +46,9 @@ export default class ModalInfo extends Component {
           <p>
             Please report any issue:
             <a className="float-right" target="_blank" href={this.GITHUNT_REPO}>
-              <button className="btn btn-sm">
+              <Button bsSize="small">
                 <FontAwesomeIcon icon={faGithub}/>
-              </button>
+              </Button>
             </a>
           </p>
           <p>Chrome web store:</p>
@@ -56,9 +57,9 @@ export default class ModalInfo extends Component {
         <div>
           <p>
             Invalid caches:
-            <button onClick={this.flushCache} className="btn btn-sm btn-danger float-right">
+            <Button onClick={this.flushCache} bsSize="small" bsStyle="danger" className="float-right">
               <FontAwesomeIcon icon={faBrush}/>
-            </button>
+            </Button>
           </p>
         </div>
       </Modal>

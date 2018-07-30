@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import Repo from '../components/repo';
 import '../assets/css/repoList.css';
+import {Row} from 'react-bootstrap';
 
 export default class RepoList extends Component {
 
@@ -49,7 +50,7 @@ export default class RepoList extends Component {
       reposList = this.props.repos.map((repos, index) =>
         <div key={index}>
           <Date since={repos.since} to={repos.to}/>
-          <div className="row">
+          <Row>
             {repos.elements.map((repo) =>
               <Repo
                 key={repo.id}
@@ -65,7 +66,7 @@ export default class RepoList extends Component {
               />
             )}
             {loader}
-          </div>
+          </Row>
         </div>
       );
     }
