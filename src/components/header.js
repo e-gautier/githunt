@@ -44,7 +44,7 @@ export default class Header extends Component {
           <div className="col">
             <Row className="title-container">
               <img src={logo} className="logo-main" alt="logo"/>
-              <h1 className="title">{app.name}</h1>
+              <h1>{app.name}</h1>
             </Row>
             <span>Hunting the best GitHub projects</span>
           </div>

@@ -3,11 +3,11 @@
     height: 70px;
 }
 
-.title {
+h1 {
     align-self: flex-end;
 }
 
-.title:first-letter {
+h1:first-letter {
     text-transform: capitalize;
 }
 

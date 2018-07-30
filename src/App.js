@@ -6,6 +6,8 @@ import ErrorBoundary from './components/errorBoundary';
 import RepoList from "./components/repoList";
 import GithubService from "./services/gitthubService";
 import moment from "moment/moment";
+import Helmet from 'react-helmet';
+import app from "../package.json";
 
 class App extends Component {
   constructor(props) {
@@ -121,6 +123,14 @@ class App extends Component {
   render() {
     return (
       <div className="App container">
+        <Helmet>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+          <meta name="theme-color" content="#000000" />
+          <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+          <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+          <title>{app.name}</title>
+        </Helmet>
         <ErrorBoundary errorMessage={this.state.error}>
           <Header
             language={this.state.language}
