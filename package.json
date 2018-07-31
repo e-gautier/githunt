@@ -2,7 +2,7 @@
   "name": "githunt",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://e-gautier.github.io/githunt",
+  "homepage": ".",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.1.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.1",
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cp src/assets/img/icon* build/static/media",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",

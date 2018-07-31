@@ -25,35 +25,36 @@ class App extends Component {
       fetching: false,
       period: localStorage.getItem('githunt.period') ? localStorage.getItem('githunt.period') : 'daily',
       language: localStorage.getItem('githunt.language') ? localStorage.getItem('githunt.language') : '',
+      to: localStorage.getItem('githunt.to') ? moment(localStorage.getItem('githunt.to')) : moment(),
     };
   }
 
   cacheRepos() {
     localStorage.setItem('githunt.repos', JSON.stringify(this.state.repos));
-    localStorage.setItem('githunt.cache.date', moment().format('YYYYMMDD'));
+    localStorage.setItem('githunt.to', this.state.to.format());
+    localStorage.setItem('githunt.cache.date', moment().format());
   }
 
-  fetchRepos = (startTo = moment(), endTo = null) => {
+  fetchRepos = (to = moment()) => {
 
     this.setState({
       fetching: true
     });
 
     let since = moment();
-    let to = endTo ? endTo : moment();
 
     switch (this.state.period) {
       case 'daily':
-        since = startTo.subtract(1, 'days');
+        since = to.clone().subtract(1, 'days');
         break;
       case 'weekly':
-        since = startTo.subtract(1, 'weeks');
+        since = to.clone().subtract(1, 'weeks');
         break;
       case 'monthly':
-        since = startTo.subtract(1, 'months');
+        since = to.clone().subtract(1, 'months');
         break;
       case 'yearly':
-        since = startTo.subtract(1, 'years');
+        since = to.clone().subtract(1, 'years');
         break;
       default:
         break;
@@ -83,8 +84,7 @@ class App extends Component {
           });
           this.setState({
             repos: currentRepos,
-            oldestDate: since.clone(),
-            recentDate: startTo.clone(),
+            to: since.clone(),
             fetching: false
           }, () => this.cacheRepos());
         }
@@ -100,7 +100,7 @@ class App extends Component {
 
   onBottomApp = () => {
     if (!this.state.fetching) {
-      this.fetchRepos(this.state.oldestDate, this.state.recentDate);
+      this.fetchRepos(this.state.to);
     }
   };
 
@@ -124,11 +124,11 @@ class App extends Component {
     return (
       <div className="App container">
         <Helmet>
-          <meta charSet="utf-8" />
+          <meta charSet="utf-8"/>
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
           <meta name="theme-color" content="#000000" />
-          <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-          <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+          <link rel="manifest" href="manifest.json" />
+          <link rel="shortcut icon" href="favicon.ico" />
           <title>{app.name}</title>
         </Helmet>
         <ErrorBoundary errorMessage={this.state.error}>

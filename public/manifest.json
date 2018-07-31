@@ -1,15 +1,31 @@
 {
+  "manifest_version": 2,
+  "name": "Githunt",
   "short_name": "Githunt",
-  "name": "Top stared Github repositories",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
+  "description": "Replace the new tab with a list of trending repositories on github belonging to any technology that you chose.",
+  "version": "1.0.0",
+  "permissions": [
+    "tabs",
+    "storage",
+    "webNavigation",
+    "*://*.github.com/*"
   ],
-  "start_url": "./index.html",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "icons": {
+    "16": "static/media/icon16.png",
+    "48": "static/media/icon48.png",
+    "128": "static/media/icon128.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "homepage_url": "https://git.io/fN2H2",
+  "browser_action": {
+    "default_title": "Githunt",
+    "default_icon": "static/media/icon128.png"
+  },
+  "applications": {
+    "gecko": {
+      "strict_min_version": "54.0"
+    }
+  }
 }

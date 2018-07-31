@@ -4,9 +4,5 @@ import moment from "moment";
 
 export default function date(props) {
 
-  if (props.since) {
-    return <div className="date">{moment(props.since).fromNow()} - {moment(props.since).format('MMM DD, YYYY')} – {moment(props.to).format('MMM DD, YYYY')}</div>;
-  }
-
-  return (null);
+  return <div className="date">{moment(props.since).fromNow()} - {moment(props.since).format('MMM DD, YYYY')} – {moment(props.to).format('MMM DD, YYYY')}</div>;
 }
