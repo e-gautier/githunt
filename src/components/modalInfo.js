@@ -4,7 +4,7 @@ import '../assets/css/modal.css';
 import logo from '../assets/img/logo.png';
 import app from '../../package.json';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBrush} from '@fortawesome/free-solid-svg-icons';
+import {faBrush, faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
 import { Button } from 'react-bootstrap';
 
@@ -24,6 +24,8 @@ Modal.setAppElement('#root');
 export default class ModalInfo extends Component {
 
   GITHUNT_REPO = 'https://git.io/fN2H2';
+  CHROME_WEB_STORE = 'https://chrome.google.com/webstore/detail/githunt/fkdnnmnoacofoklehaokcabccnbahfhm';
+  FIREFOX_ADDON = 'https://addons.mozilla.org/en-US/firefox/addon/githunt';
 
   flushCache() {
     localStorage.clear();
@@ -51,8 +53,8 @@ export default class ModalInfo extends Component {
               </Button>
             </a>
           </p>
-          <p>Chrome web store:</p>
-          <p>Firefox addon:</p>
+          <p>Chrome web store: <a className="float-right" href={this.CHROME_WEB_STORE} target="_blank">Chrome&nbsp;<FontAwesomeIcon icon={faExternalLinkAlt}/></a></p>
+          <p>Firefox addon: <a className="float-right" href={this.FIREFOX_ADDON} target="_blank">Firefox&nbsp;<FontAwesomeIcon icon={faExternalLinkAlt}/></a></p>
         </div>
         <div>
           <p>
