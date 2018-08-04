@@ -25,14 +25,14 @@ export default class ModalInfo extends Component {
   render() {
     const styles = {
       content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-          backgroundColor: this.props.darkMode ? '#343a40' : '#fff',
-          color: this.props.darkMode ? '#A5A5A5' : '#212529'
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: this.props.darkMode ? '#343a40' : '#fff',
+        color: this.props.darkMode ? '#A5A5A5' : '#212529'
       }
     };
 

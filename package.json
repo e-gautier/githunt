@@ -32,6 +32,7 @@
     ]
   },
   "scripts": {
+    "lint": "prettier --single-quote --write src/**/*.{js,jsx,json,scss}",
     "precommit": "lint-staged",
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm-run-all build-css build-js",
