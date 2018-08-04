@@ -2,7 +2,13 @@
 
 Greetings traveler! Let's go hunting.
 
+## Light mode
+
 ![screenshot](src/assets/img/screenshot_Githunt.png)
+
+## Dark mode
+
+![screenshot](src/assets/img/screenshot_Githunt_Dark.png)
 
 ## install (dev)
 `yarn`
@@ -19,6 +25,5 @@ Then submit or pack (as zip) the build folder
 `yarn deploy`
 
 ## TODO
-- Dark mode
 - env
 - Readme preview

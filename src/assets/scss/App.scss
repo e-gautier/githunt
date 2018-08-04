@@ -1,0 +1,36 @@
+$dark-background-color: #111111;
+$light-background-color: #ece1e1;
+$dark-font-color: #a5a5a5;
+$light-font-color: #212529;
+$dark-card-color: #343a40;
+
+.dark {
+  background-color: $dark-background-color;
+  color: $dark-font-color;
+
+  .card {
+    background-color: $dark-card-color;
+  }
+
+  a,
+  a:hover {
+    color: #888888;
+    text-decoration: none;
+  }
+
+  .form-control,
+  .form-control:focus {
+    background-color: $dark-background-color;
+    border-color: $dark-card-color;
+  }
+}
+
+.light {
+  background-color: $light-background-color;
+  color: $light-font-color;
+  a,
+  a:hover {
+    color: #888888;
+    text-decoration: none;
+  }
+}
