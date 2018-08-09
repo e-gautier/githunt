@@ -12,10 +12,9 @@ import Switch from 'react-switch';
 Modal.setAppElement('#root');
 
 export default class ModalInfo extends Component {
-  GITHUNT_REPO = 'https://git.io/fN2H2';
-  CHROME_WEB_STORE =
-    'https://chrome.google.com/webstore/detail/githunt/fkdnnmnoacofoklehaokcabccnbahfhm';
-  FIREFOX_ADDON = 'https://addons.mozilla.org/en-US/firefox/addon/githunt';
+  GITHUNT_REPO = process.env.REACT_APP_GITHUNT_REPO;
+  CHROME_WEB_STORE = process.env.REACT_APP_CHROME_WEB_STORE;
+  FIREFOX_ADDON = process.env.REACT_APP_FIREFOX_ADDON;
 
   flushCache() {
     localStorage.clear();

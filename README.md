@@ -25,5 +25,4 @@ Then submit or pack (as zip) the build folder
 `yarn deploy`
 
 ## TODO
-- env
 - Readme preview
