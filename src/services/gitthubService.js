@@ -16,7 +16,9 @@ export default class GithubService {
         this.GITHUB_API
       }/search/repositories?sort=${sort}&q=created:${since.format(
         'YYYY-MM-DD'
-      )}..${to ? to.format('YYYY-MM-DD') : '*'}${languageQuery}&per_page=${repoAmount}`
+      )}..${
+        to ? to.format('YYYY-MM-DD') : '*'
+      }${languageQuery}&per_page=${repoAmount}`
     );
   }
 }

@@ -41,8 +41,7 @@ class App extends Component {
         localStorage.getItem('githunt.mode.dark') === 'true'
           ? localStorage.getItem('githunt.mode.dark') === 'true'
           : false,
-      repoAmount:
-        localStorage.getItem('githunt.repoAmount')
+      repoAmount: localStorage.getItem('githunt.repoAmount')
         ? localStorage.getItem('githunt.repoAmount')
         : 30
     };
@@ -81,7 +80,13 @@ class App extends Component {
 
     const githubService = new GithubService();
     githubService
-      .fetchRepos('stars', this.state.language, this.state.repoAmount, since, to)
+      .fetchRepos(
+        'stars',
+        this.state.language,
+        this.state.repoAmount,
+        since,
+        to
+      )
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -112,13 +117,16 @@ class App extends Component {
       });
   };
 
-  handleRepoAmountChange = (amount) => {
-    this.setState({
-      repoAmount: amount
-    }, () => {
-      this.cacheRepos();
-      this.refreshRepos();
-    });
+  handleRepoAmountChange = amount => {
+    this.setState(
+      {
+        repoAmount: amount
+      },
+      () => {
+        this.cacheRepos();
+        this.refreshRepos();
+      }
+    );
   };
 
   refreshRepos = () => {
