@@ -56,6 +56,8 @@ export default class Header extends Component {
           closeAbout={this.closeAbout}
           switchMode={this.props.switchMode}
           darkMode={this.props.darkMode}
+          repoAmount={this.props.repoAmount}
+          handleRepoAmountChange={this.props.handleRepoAmountChange}
         />
         <Row>
           <div className="col">
@@ -73,7 +75,7 @@ export default class Header extends Component {
                   onChange={event =>
                     this.props.handlePeriodChange(event.target.value)
                   }
-                  className="form-control"
+                  className="form-control form-control-sm"
                 >
                   <option value="daily">Daily</option>
                   <option value="weekly">Weekly</option>
@@ -88,7 +90,7 @@ export default class Header extends Component {
                 <input
                   type="text"
                   placeholder="All languages"
-                  className="form-control"
+                  className="form-control form-control-sm"
                   value={this.state.language}
                   onChange={this.handleChange}
                 />
@@ -99,6 +101,7 @@ export default class Header extends Component {
                     onClick={() =>
                       this.props.handleLanguageInput(this.state.language)
                     }
+                    className="btn-sm"
                   >
                     <FontAwesomeIcon icon={faCheck} />
                   </Button>

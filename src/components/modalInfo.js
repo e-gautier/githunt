@@ -107,6 +107,21 @@ export default class ModalInfo extends Component {
               <FontAwesomeIcon icon={faBrush} />
             </Button>
           </div>
+          <div className="list-element">
+            Repos pool size:
+            <select
+              value={this.props.repoAmount}
+              onChange={event =>
+                this.props.handleRepoAmountChange(event.target.value)
+              }
+              className="form-control form-control-sm select-amount"
+            >
+              <option>3</option>
+              <option>12</option>
+              <option>30</option>
+              <option>60</option>
+            </select>
+          </div>
         </div>
       </Modal>
     );

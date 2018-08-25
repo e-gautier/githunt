@@ -40,7 +40,11 @@ class App extends Component {
       darkMode:
         localStorage.getItem('githunt.mode.dark') === 'true'
           ? localStorage.getItem('githunt.mode.dark') === 'true'
-          : false
+          : false,
+      repoAmount:
+        localStorage.getItem('githunt.repoAmount')
+        ? localStorage.getItem('githunt.repoAmount')
+        : 30
     };
   }
 
@@ -48,6 +52,7 @@ class App extends Component {
     localStorage.setItem('githunt.repos', JSON.stringify(this.state.repos));
     localStorage.setItem('githunt.to', this.state.to.format());
     localStorage.setItem('githunt.cache.date', moment().format());
+    localStorage.setItem('githunt.repoAmount', this.state.repoAmount);
   }
 
   fetchRepos = (to = moment()) => {
@@ -76,7 +81,7 @@ class App extends Component {
 
     const githubService = new GithubService();
     githubService
-      .fetchRepos('stars', this.state.language, since, to)
+      .fetchRepos('stars', this.state.language, this.state.repoAmount, since, to)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -105,6 +110,15 @@ class App extends Component {
           () => this.cacheRepos()
         );
       });
+  };
+
+  handleRepoAmountChange = (amount) => {
+    this.setState({
+      repoAmount: amount
+    }, () => {
+      this.cacheRepos();
+      this.refreshRepos();
+    });
   };
 
   refreshRepos = () => {
@@ -180,6 +194,8 @@ class App extends Component {
               repos={this.state.repos}
               switchMode={this.switchMode}
               darkMode={this.state.darkMode}
+              repoAmount={this.state.repoAmount}
+              handleRepoAmountChange={this.handleRepoAmountChange}
             />
             <RepoList
               error={this.state.error}

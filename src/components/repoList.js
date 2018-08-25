@@ -25,6 +25,7 @@ export default class RepoList extends Component {
         <div className="offset-5 loader">
           <strong className="text-loader">Wait, hunting them down...</strong>
           <FontAwesomeIcon icon={faSyncAlt} spin size="5x" />
+          <br/>
           <span>{this.props.error}</span>
         </div>
       </div>
@@ -37,7 +38,7 @@ export default class RepoList extends Component {
           <FontAwesomeIcon icon={faSyncAlt} spin />
           &nbsp;
           <strong>Wait, hunting them down...</strong>
-          <br />
+          <br/>
           <span>{this.props.error}</span>
         </div>
       );
