@@ -4,7 +4,7 @@ import '../assets/scss/App.css';
 import Header from './header';
 import ErrorBoundary from './errorBoundary';
 import RepoList from './repoList';
-import GithubService from '../services/gitthubService';
+import GithubService from '../services/githubService';
 import moment from 'moment';
 import Helmet from 'react-helmet';
 import app from '../../package.json';
