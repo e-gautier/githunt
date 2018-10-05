@@ -8,6 +8,9 @@ import GithubService from '../services/githubService';
 import moment from 'moment';
 import Helmet from 'react-helmet';
 import app from '../../package.json';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import VisibilitySensor from 'react-visibility-sensor';
 
 class App extends Component {
   constructor(props) {
@@ -93,8 +96,7 @@ class App extends Component {
         } else {
           response.json().then(body => {
             this.setState({
-              error: body.message,
-              fetching: false
+              error: body.message
             });
           });
         }
@@ -137,9 +139,7 @@ class App extends Component {
   };
 
   onBottomApp = () => {
-    if (!this.state.fetching) {
       this.fetchRepos(this.state.to);
-    }
   };
 
   handlePeriodChange = period => {
@@ -178,6 +178,19 @@ class App extends Component {
   };
 
   render() {
+
+    const loader = (
+      <VisibilitySensor onChange={(visible) => {visible && this.onBottomApp()}}>
+        <div className="loader-small">
+          <FontAwesomeIcon icon={faSyncAlt} spin />
+          &nbsp;
+          <strong>Wait, hunting them down...</strong>
+          <br />
+          <span>{this.state.error}</span>
+        </div>
+      </VisibilitySensor>
+    );
+
     return (
       <div className={this.state.darkMode ? 'dark' : 'light'}>
         <div className="App container">
@@ -208,11 +221,10 @@ class App extends Component {
             <RepoList
               error={this.state.error}
               fetchRepos={this.fetchRepos}
-              onBottomApp={this.onBottomApp}
               repos={this.state.repos}
-              fetching={this.state.fetching}
               darkMode={this.state.darkMode}
             />
+            {loader}
           </ErrorBoundary>
         </div>
       </div>

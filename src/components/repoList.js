@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons/index';
 import Date from '../components/date';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BottomScrollListener from 'react-bottom-scroll-listener';
 import Repo from '../components/repo';
 import '../assets/scss/repoList.css';
 import { Row } from 'react-bootstrap';
@@ -31,22 +30,6 @@ export default class RepoList extends Component {
       </div>
     );
 
-    let loader = null;
-    if (this.props.fetching) {
-      loader = (
-        <div className="loader-small">
-          <FontAwesomeIcon icon={faSyncAlt} spin />
-          &nbsp;
-          <strong>Wait, hunting them down...</strong>
-          <br />
-          <span>{this.props.error}</span>
-        </div>
-      );
-    } else {
-      loader = (
-        <BottomScrollListener onBottom={this.props.onBottomApp} offset={1200} />
-      );
-    }
 
     if (this.props.repos.length !== 0) {
       reposList = this.props.repos.map((repos, index) => (
@@ -68,7 +51,7 @@ export default class RepoList extends Component {
                 darkMode={this.props.darkMode}
               />
             ))}
-            {loader}
+
           </Row>
         </div>
       ));
