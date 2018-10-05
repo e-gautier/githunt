@@ -30,7 +30,6 @@ export default class RepoList extends Component {
       </div>
     );
 
-
     if (this.props.repos.length !== 0) {
       reposList = this.props.repos.map((repos, index) => (
         <div key={index}>
@@ -51,7 +50,6 @@ export default class RepoList extends Component {
                 darkMode={this.props.darkMode}
               />
             ))}
-
           </Row>
         </div>
       ));

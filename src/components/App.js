@@ -8,8 +8,8 @@ import GithubService from '../services/githubService';
 import moment from 'moment';
 import Helmet from 'react-helmet';
 import app from '../../package.json';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import VisibilitySensor from 'react-visibility-sensor';
 
 class App extends Component {
@@ -139,7 +139,7 @@ class App extends Component {
   };
 
   onBottomApp = () => {
-      this.fetchRepos(this.state.to);
+    this.fetchRepos(this.state.to);
   };
 
   handlePeriodChange = period => {
@@ -178,9 +178,12 @@ class App extends Component {
   };
 
   render() {
-
     const loader = (
-      <VisibilitySensor onChange={(visible) => {visible && this.onBottomApp()}}>
+      <VisibilitySensor
+        onChange={visible => {
+          visible && this.onBottomApp();
+        }}
+      >
         <div className="loader-small">
           <FontAwesomeIcon icon={faSyncAlt} spin />
           &nbsp;
