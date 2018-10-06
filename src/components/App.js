@@ -62,7 +62,8 @@ class App extends Component {
 
   fetchRepos = (to = moment()) => {
     this.setState({
-      fetching: true
+      fetching: true,
+      error: undefined
     });
     let since = moment();
 
