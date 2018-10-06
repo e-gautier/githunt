@@ -10,9 +10,9 @@ import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import InfiniteScroll from 'react-infinite-scroller';
-import Date from "./date";
-import { Row } from "react-bootstrap";
-import Repo from "./repo";
+import Date from './date';
+import { Row } from 'react-bootstrap';
+import Repo from './repo';
 import Fade from 'react-reveal';
 
 class App extends Component {
@@ -183,7 +183,7 @@ class App extends Component {
     this.state.repos.map((repos, index) => {
       return rows.push(
         <Fade duration={300} key={index}>
-          <Date since={repos.since} to={repos.to}/>
+          <Date since={repos.since} to={repos.to} />
           <Row>
             {repos.elements.map(repo => (
               <Repo
@@ -212,7 +212,17 @@ class App extends Component {
         <strong>Wait, hunting them down...</strong>
         <br />
         <span>{this.state.error}</span>
-        <span>{this.state.error && <button onClick={() => this.setState({fetching: false, error: undefined})}>try again</button>}</span>
+        <span>
+          {this.state.error && (
+            <button
+              onClick={() =>
+                this.setState({ fetching: false, error: undefined })
+              }
+            >
+              try again
+            </button>
+          )}
+        </span>
       </div>
     );
 
@@ -246,11 +256,13 @@ class App extends Component {
             <Fade duration={300}>
               <InfiniteScroll
                 pageStart={0}
-                loadMore={() => this.state.fetching || this.fetchRepos(this.state.to)}
+                loadMore={() =>
+                  this.state.fetching || this.fetchRepos(this.state.to)
+                }
                 hasMore={true || false}
                 loader={loader}
               >
-                  {rows}
+                {rows}
               </InfiniteScroll>
             </Fade>
           </ErrorBoundary>
