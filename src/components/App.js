@@ -3,14 +3,17 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../assets/scss/App.css';
 import Header from './header';
 import ErrorBoundary from './errorBoundary';
-import RepoList from './repoList';
 import GithubService from '../services/githubService';
 import moment from 'moment';
 import Helmet from 'react-helmet';
 import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
-import VisibilitySensor from 'react-visibility-sensor';
+import InfiniteScroll from 'react-infinite-scroller';
+import Date from "./date";
+import { Row } from "react-bootstrap";
+import Repo from "./repo";
+import Fade from 'react-reveal';
 
 class App extends Component {
   constructor(props) {
@@ -30,7 +33,6 @@ class App extends Component {
         ) > -23
           ? JSON.parse(localStorage.getItem('githunt.repos'))
           : [],
-      fetching: false,
       period: localStorage.getItem('githunt.period')
         ? localStorage.getItem('githunt.period')
         : 'daily',
@@ -46,7 +48,8 @@ class App extends Component {
           : false,
       repoAmount: localStorage.getItem('githunt.repoAmount')
         ? localStorage.getItem('githunt.repoAmount')
-        : 30
+        : 30,
+      fetching: false
     };
   }
 
@@ -61,7 +64,6 @@ class App extends Component {
     this.setState({
       fetching: true
     });
-
     let since = moment();
 
     switch (this.state.period) {
@@ -102,6 +104,9 @@ class App extends Component {
         }
       })
       .then(body => {
+        if (body === undefined) {
+          return;
+        }
         const currentRepos = this.state.repos;
         currentRepos.push({
           elements: body.items,
@@ -136,10 +141,6 @@ class App extends Component {
       repos: []
     });
     this.fetchRepos();
-  };
-
-  onBottomApp = () => {
-    this.fetchRepos(this.state.to);
   };
 
   handlePeriodChange = period => {
@@ -178,20 +179,41 @@ class App extends Component {
   };
 
   render() {
+    let rows = [];
+    this.state.repos.map((repos, index) => {
+      return rows.push(
+        <Fade duration={300} key={index}>
+          <Date since={repos.since} to={repos.to}/>
+          <Row>
+            {repos.elements.map(repo => (
+              <Repo
+                key={repo.id}
+                fullName={repo.full_name}
+                description={repo.description}
+                forks={repo.forks_count}
+                stars={repo.stargazers_count}
+                openIssues={repo.open_issues}
+                htmlURL={repo.html_url}
+                createdAt={repo.created_at}
+                watchers={repo.watchers_count}
+                license={repo.license ? repo.license.key : null}
+                darkMode={this.state.darkMode}
+              />
+            ))}
+          </Row>
+        </Fade>
+      );
+    });
+
     const loader = (
-      <VisibilitySensor
-        onChange={visible => {
-          visible && this.onBottomApp();
-        }}
-      >
-        <div className="loader-small">
-          <FontAwesomeIcon icon={faSyncAlt} spin />
-          &nbsp;
-          <strong>Wait, hunting them down...</strong>
-          <br />
-          <span>{this.state.error}</span>
-        </div>
-      </VisibilitySensor>
+      <div className="loader-small" key={0}>
+        <FontAwesomeIcon icon={faSyncAlt} spin />
+        &nbsp;
+        <strong>Wait, hunting them down...</strong>
+        <br />
+        <span>{this.state.error}</span>
+        <span>{this.state.error && <button onClick={() => this.setState({fetching: false, error: undefined})}>try again</button>}</span>
+      </div>
     );
 
     return (
@@ -221,13 +243,16 @@ class App extends Component {
               repoAmount={this.state.repoAmount}
               handleRepoAmountChange={this.handleRepoAmountChange}
             />
-            <RepoList
-              error={this.state.error}
-              fetchRepos={this.fetchRepos}
-              repos={this.state.repos}
-              darkMode={this.state.darkMode}
-            />
-            {loader}
+            <Fade duration={300}>
+              <InfiniteScroll
+                pageStart={0}
+                loadMore={() => this.state.fetching || this.fetchRepos(this.state.to)}
+                hasMore={true || false}
+                loader={loader}
+              >
+                  {rows}
+              </InfiniteScroll>
+            </Fade>
           </ErrorBoundary>
         </div>
       </div>
