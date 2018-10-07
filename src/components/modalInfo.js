@@ -146,7 +146,12 @@ export default class ModalInfo extends Component {
           <div className="list-element">
             <FontAwesomeIcon data-tip data-for="tooltip-access-token" icon={faQuestionCircle} />
             &nbsp;Personal access token:
-            <ReactTooltip id="tooltip-access-token" place="right" type={this.props.darkMode ? 'light' : 'dark'} effect="solid">
+            <ReactTooltip
+              id="tooltip-access-token"
+              place="right"
+              type={this.props.darkMode ? 'light' : 'dark'}
+              effect="solid"
+            >
               <span>
                 <strong>No scopes needed at all</strong>
               </span>
