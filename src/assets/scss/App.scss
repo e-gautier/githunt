@@ -4,6 +4,14 @@ $dark-font-color: #a5a5a5;
 $light-font-color: #212529;
 $dark-card-color: #343a40;
 
+html, body, #root {
+  height: 100%;
+}
+
+#theme-container {
+  min-height: 100%;
+}
+
 .dark {
   background-color: $dark-background-color;
   color: $dark-font-color;

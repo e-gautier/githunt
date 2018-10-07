@@ -232,7 +232,7 @@ class App extends Component {
     );
 
     return (
-      <div className={this.state.darkMode ? 'dark' : 'light'}>
+      <div className={this.state.darkMode ? 'dark' : 'light'} id="theme-container">
         <div className="App container">
           <Helmet>
             <meta charSet="utf-8" />
