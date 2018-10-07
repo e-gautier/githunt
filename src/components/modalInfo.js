@@ -4,12 +4,12 @@ import '../assets/scss/modal.css';
 import logo from '../assets/img/logo.png';
 import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBrush, faUserCheck, faExternalLinkAlt, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import { faBrush, faUserCheck, faExternalLinkAlt, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { Button, FormControl } from 'react-bootstrap';
 import Switch from 'react-switch';
 import GithubService from '../services/githubService';
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 
 Modal.setAppElement('#root');
 
@@ -41,7 +41,7 @@ export default class ModalInfo extends Component {
     }
 
     const githubService = new GithubService();
-    githubService.isAccessTokenValid(token).then((response) => {
+    githubService.isAccessTokenValid(token).then(response => {
       if (response.status === 200) {
         this.setState({
           formControlInputValidation: 'form-control-valid',
@@ -83,7 +83,7 @@ export default class ModalInfo extends Component {
         <h3 className="aboutHeader">v{app.version}</h3>
         <div>
           <div className="list-element">
-            <img src={logo} alt="logo" id="logo"/>
+            <img src={logo} alt="logo" id="logo" />
           </div>
           <div className="list-element">
             Please report any issue:
@@ -95,22 +95,14 @@ export default class ModalInfo extends Component {
           </div>
           <div className="list-element">
             Chrome web store:
-            <a
-              className="float-right"
-              href={this.CHROME_WEB_STORE}
-              target="_blank"
-            >
+            <a className="float-right" href={this.CHROME_WEB_STORE} target="_blank">
               Chrome &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a>
           </div>
           <div className="list-element">
             Firefox addon:
-            <a
-              className="float-right"
-              href={this.FIREFOX_ADDON}
-              target="_blank"
-            >
+            <a className="float-right" href={this.FIREFOX_ADDON} target="_blank">
               Firefox &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a>
@@ -134,12 +126,7 @@ export default class ModalInfo extends Component {
           </div>
           <div className="list-element">
             Invalid caches:
-            <Button
-              onClick={this.flushCache}
-              bsSize="small"
-              bsStyle="danger"
-              className="float-right"
-            >
+            <Button onClick={this.flushCache} bsSize="small" bsStyle="danger" className="float-right">
               <FontAwesomeIcon icon={faBrush} />
             </Button>
           </div>
@@ -147,9 +134,7 @@ export default class ModalInfo extends Component {
             Repos pool size:
             <select
               value={this.props.repoAmount}
-              onChange={event =>
-                this.props.handleRepoAmountChange(event.target.value)
-              }
+              onChange={event => this.props.handleRepoAmountChange(event.target.value)}
               className="form-control form-control-sm select-amount"
             >
               <option>3</option>
@@ -159,14 +144,29 @@ export default class ModalInfo extends Component {
             </select>
           </div>
           <div className="list-element">
-            <FontAwesomeIcon data-tip data-for='tooltip-access-token' icon={faQuestionCircle}/>&nbsp;Personal access token:
-            <ReactTooltip id='tooltip-access-token' place="right" type="light" effect="solid">
-              <span><strong>No scopes needed at all</strong></span>
+            <FontAwesomeIcon data-tip data-for="tooltip-access-token" icon={faQuestionCircle} />
+            &nbsp;Personal access token:
+            <ReactTooltip id="tooltip-access-token" place="right" type="light" effect="solid">
+              <span>
+                <strong>No scopes needed at all</strong>
+              </span>
             </ReactTooltip>
             <form className="input-group personal-access-token-input">
-              <FormControl className={`form-control-sm ${this.state.formControlInputValidation}`}  type="password" value={this.props.accessToken} onChange={event => this.props.handleAccessTokenChange(event.target.value)}/>
+              <FormControl
+                className={`form-control-sm ${this.state.formControlInputValidation}`}
+                type="password"
+                value={this.props.accessToken}
+                onChange={event => this.props.handleAccessTokenChange(event.target.value)}
+              />
               <div className="input-group-append">
-                <Button bsStyle={this.state.formControlButtonValidation} onClick={() => this.verifyAccessToken(this.props.accessToken)} className="btn-sm"><FontAwesomeIcon icon={faUserCheck} />&nbsp;Verify</Button>
+                <Button
+                  bsStyle={this.state.formControlButtonValidation}
+                  onClick={() => this.verifyAccessToken(this.props.accessToken)}
+                  className="btn-sm"
+                >
+                  <FontAwesomeIcon icon={faUserCheck} />
+                  &nbsp;Verify
+                </Button>
               </div>
             </form>
           </div>

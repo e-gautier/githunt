@@ -31,19 +31,19 @@
 }
 
 .form-control-valid {
-  $color: #28A745;
+  $color: #28a745;
   border: 1px solid $color;
   background-color: $color;
 }
 
 .form-control-invalid {
-  $color: #DC3545;
+  $color: #dc3545;
   border: 1px solid $color;
   background-color: $color;
 }
 
 .form-control-empty {
-  $color: #FFC107;
+  $color: #ffc107;
   border: 1px solid $color;
   background-color: $color;
 }

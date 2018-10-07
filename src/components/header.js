@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import logo from '../assets/img/logo.png';
 import '../assets/scss/header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faSyncAlt,
-  faInfoCircle,
-  faCheck
-} from '@fortawesome/free-solid-svg-icons';
+import { faSyncAlt, faInfoCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
 import ModalInfo from '../components/modalInfo';
 import { Row, Button } from 'react-bootstrap';
 import app from '../../package.json';
@@ -39,12 +35,7 @@ export default class Header extends Component {
 
   render() {
     const refreshIcon = this.props.repos ? (
-      <FontAwesomeIcon
-        onClick={this.props.refreshRepos}
-        icon={faSyncAlt}
-        size="lg"
-        className="icon"
-      />
+      <FontAwesomeIcon onClick={this.props.refreshRepos} icon={faSyncAlt} size="lg" className="icon" />
     ) : (
       <FontAwesomeIcon icon={faSyncAlt} size="lg" className="icon" spin />
     );
@@ -74,9 +65,7 @@ export default class Header extends Component {
               <div className="col-5">
                 <select
                   value={this.props.period}
-                  onChange={event =>
-                    this.props.handlePeriodChange(event.target.value)
-                  }
+                  onChange={event => this.props.handlePeriodChange(event.target.value)}
                   className="form-control form-control-sm"
                 >
                   <option value="daily">Daily</option>
@@ -85,10 +74,7 @@ export default class Header extends Component {
                   <option value="yearly">Yearly</option>
                 </select>
               </div>
-              <form
-                onSubmit={event => event.preventDefault()}
-                className="col-5 input-group"
-              >
+              <form onSubmit={event => event.preventDefault()} className="col-5 input-group">
                 <input
                   type="text"
                   placeholder="All languages"
@@ -100,9 +86,7 @@ export default class Header extends Component {
                   <Button
                     type="submit"
                     title="Valid"
-                    onClick={() =>
-                      this.props.handleLanguageInput(this.state.language)
-                    }
+                    onClick={() => this.props.handleLanguageInput(this.state.language)}
                     className="btn-sm"
                   >
                     <FontAwesomeIcon icon={faCheck} />
@@ -111,12 +95,7 @@ export default class Header extends Component {
               </form>
               <div className="col-1">{refreshIcon}</div>
               <div className="col-1">
-                <FontAwesomeIcon
-                  onClick={this.openAbout}
-                  icon={faInfoCircle}
-                  size="lg"
-                  className="icon"
-                />
+                <FontAwesomeIcon onClick={this.openAbout} icon={faInfoCircle} size="lg" className="icon" />
               </div>
             </Row>
           </div>

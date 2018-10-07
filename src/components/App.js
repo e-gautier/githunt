@@ -8,10 +8,7 @@ import moment from 'moment';
 import Helmet from 'react-helmet';
 import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faSyncAlt,
-  faArrowAltCircleUp
-} from '@fortawesome/free-solid-svg-icons';
+import { faSyncAlt, faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import InfiniteScroll from 'react-infinite-scroller';
 import Date from './date';
 import { Row } from 'react-bootstrap';
@@ -31,28 +28,17 @@ class App extends Component {
        */
       repos:
         localStorage.getItem('githunt.repos') &&
-        moment(localStorage.getItem('githunt.cache.date')).diff(
-          moment(),
-          'hours'
-        ) > -23
+        moment(localStorage.getItem('githunt.cache.date')).diff(moment(), 'hours') > -23
           ? JSON.parse(localStorage.getItem('githunt.repos'))
           : [],
-      period: localStorage.getItem('githunt.period')
-        ? localStorage.getItem('githunt.period')
-        : 'daily',
-      language: localStorage.getItem('githunt.language')
-        ? localStorage.getItem('githunt.language')
-        : '',
-      to: localStorage.getItem('githunt.to')
-        ? moment(localStorage.getItem('githunt.to'))
-        : moment(),
+      period: localStorage.getItem('githunt.period') ? localStorage.getItem('githunt.period') : 'daily',
+      language: localStorage.getItem('githunt.language') ? localStorage.getItem('githunt.language') : '',
+      to: localStorage.getItem('githunt.to') ? moment(localStorage.getItem('githunt.to')) : moment(),
       darkMode:
         localStorage.getItem('githunt.mode.dark') === 'true'
           ? localStorage.getItem('githunt.mode.dark') === 'true'
           : false,
-      repoAmount: localStorage.getItem('githunt.repoAmount')
-        ? localStorage.getItem('githunt.repoAmount')
-        : 30,
+      repoAmount: localStorage.getItem('githunt.repoAmount') ? localStorage.getItem('githunt.repoAmount') : 30,
       accessToken: localStorage.getItem('githunt.accessToken') ? localStorage.getItem('githunt.accessToken') : '',
       fetching: false
     };
@@ -92,14 +78,7 @@ class App extends Component {
 
     const githubService = new GithubService();
     githubService
-      .fetchRepos(
-        'stars',
-        this.state.language,
-        this.state.repoAmount,
-        since,
-        to,
-        this.state.accessToken
-      )
+      .fetchRepos('stars', this.state.language, this.state.repoAmount, since, to, this.state.accessToken)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -145,11 +124,14 @@ class App extends Component {
   };
 
   handleAccessTokenChange = token => {
-    this.setState({
-      accessToken: token
-    }, () => {
-      this.cacheRepos();
-    })
+    this.setState(
+      {
+        accessToken: token
+      },
+      () => {
+        this.cacheRepos();
+      }
+    );
   };
 
   refreshRepos = () => {
@@ -230,30 +212,18 @@ class App extends Component {
         <span>{this.state.error}</span>
         <span>
           {this.state.error && (
-            <button
-              onClick={() =>
-                this.setState({ fetching: false, error: undefined })
-              }
-            >
-              try again
-            </button>
+            <button onClick={() => this.setState({ fetching: false, error: undefined })}>try again</button>
           )}
         </span>
       </div>
     );
 
     return (
-      <div
-        className={this.state.darkMode ? 'dark' : 'light'}
-        id="theme-container"
-      >
+      <div className={this.state.darkMode ? 'dark' : 'light'} id="theme-container">
         <div className="App container">
           <Helmet>
             <meta charSet="utf-8" />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1, shrink-to-fit=no"
-            />
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
             <meta name="theme-color" content="#000000" />
             <link rel="manifest" href="manifest.json" />
             <link rel="shortcut icon" href="favicon.ico" />
@@ -280,9 +250,7 @@ class App extends Component {
             <Fade duration={300}>
               <InfiniteScroll
                 pageStart={0}
-                loadMore={() =>
-                  this.state.fetching || this.fetchRepos(this.state.to)
-                }
+                loadMore={() => this.state.fetching || this.fetchRepos(this.state.to)}
                 hasMore={true || false}
                 loader={loader}
               >

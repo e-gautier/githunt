@@ -14,11 +14,7 @@ export default class GithubService {
   fetchRepos(sort, language, repoAmount, since, to = null, accessToken = '') {
     const languageQuery = language ? ` language:${language}` : '';
     return fetch(
-      `${
-        this.GITHUB_API
-      }/search/repositories?sort=${sort}&q=created:${since.format(
-        'YYYY-MM-DD'
-      )}..${
+      `${this.GITHUB_API}/search/repositories?sort=${sort}&q=created:${since.format('YYYY-MM-DD')}..${
         to ? to.format('YYYY-MM-DD') : '*'
       }${languageQuery}&per_page=${repoAmount}&access_token=${accessToken}`
     );
