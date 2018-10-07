@@ -8,7 +8,10 @@ import moment from 'moment';
 import Helmet from 'react-helmet';
 import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSyncAlt, faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSyncAlt,
+  faArrowAltCircleUp
+} from '@fortawesome/free-solid-svg-icons';
 import InfiniteScroll from 'react-infinite-scroller';
 import Date from './date';
 import { Row } from 'react-bootstrap';
@@ -244,7 +247,7 @@ class App extends Component {
           </Helmet>
           <ErrorBoundary errorMessage={this.state.error}>
             <ScrollToTop showUnder={160}>
-              <FontAwesomeIcon icon={faArrowAltCircleUp} size={"3x"}/>
+              <FontAwesomeIcon icon={faArrowAltCircleUp} size={'3x'} />
             </ScrollToTop>
             <Header
               language={this.state.language}
