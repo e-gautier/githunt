@@ -53,6 +53,7 @@ class App extends Component {
       repoAmount: localStorage.getItem('githunt.repoAmount')
         ? localStorage.getItem('githunt.repoAmount')
         : 30,
+      accessToken: localStorage.getItem('githunt.accessToken') ? localStorage.getItem('githunt.accessToken') : '',
       fetching: false
     };
   }
@@ -62,6 +63,7 @@ class App extends Component {
     localStorage.setItem('githunt.to', this.state.to.format());
     localStorage.setItem('githunt.cache.date', moment().format());
     localStorage.setItem('githunt.repoAmount', this.state.repoAmount);
+    localStorage.setItem('githunt.accessToken', this.state.accessToken);
   }
 
   fetchRepos = (to = moment()) => {
@@ -95,7 +97,8 @@ class App extends Component {
         this.state.language,
         this.state.repoAmount,
         since,
-        to
+        to,
+        this.state.accessToken
       )
       .then(response => {
         if (response.ok) {
@@ -139,6 +142,14 @@ class App extends Component {
         this.refreshRepos();
       }
     );
+  };
+
+  handleAccessTokenChange = token => {
+    this.setState({
+      accessToken: token
+    }, () => {
+      this.cacheRepos();
+    })
   };
 
   refreshRepos = () => {
@@ -263,6 +274,8 @@ class App extends Component {
               darkMode={this.state.darkMode}
               repoAmount={this.state.repoAmount}
               handleRepoAmountChange={this.handleRepoAmountChange}
+              accessToken={this.state.accessToken}
+              handleAccessTokenChange={this.handleAccessTokenChange}
             />
             <Fade duration={300}>
               <InfiniteScroll

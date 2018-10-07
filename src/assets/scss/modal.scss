@@ -24,3 +24,31 @@
   width: 100px;
   float: right;
 }
+
+.personal-access-token-input {
+  width: 200px;
+  float: right;
+}
+
+.form-control-valid {
+  $color: #28A745;
+  border: 1px solid $color;
+  background-color: $color;
+}
+
+.form-control-invalid {
+  $color: #DC3545;
+  border: 1px solid $color;
+  background-color: $color;
+}
+
+.form-control-empty {
+  $color: #FFC107;
+  border: 1px solid $color;
+  background-color: $color;
+}
+
+#logo {
+  display: block;
+  margin: 0 auto;
+}

@@ -4,10 +4,12 @@ import '../assets/scss/modal.css';
 import logo from '../assets/img/logo.png';
 import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBrush, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBrush, faUserCheck, faExternalLinkAlt, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { Button } from 'react-bootstrap';
+import { Button, FormControl } from 'react-bootstrap';
 import Switch from 'react-switch';
+import GithubService from '../services/githubService';
+import ReactTooltip from 'react-tooltip'
 
 Modal.setAppElement('#root');
 
@@ -16,9 +18,42 @@ export default class ModalInfo extends Component {
   CHROME_WEB_STORE = process.env.REACT_APP_CHROME_WEB_STORE;
   FIREFOX_ADDON = process.env.REACT_APP_FIREFOX_ADDON;
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      formControlInputValidation: '',
+      formControlButtonValidation: 'default'
+    };
+  }
+
   flushCache() {
     localStorage.clear();
     window.location.reload();
+  }
+
+  verifyAccessToken(token) {
+    if (token === '') {
+      return this.setState({
+        formControlInputValidation: 'form-control-empty',
+        formControlButtonValidation: 'warning'
+      });
+    }
+
+    const githubService = new GithubService();
+    githubService.isAccessTokenValid(token).then((response) => {
+      if (response.status === 200) {
+        this.setState({
+          formControlInputValidation: 'form-control-valid',
+          formControlButtonValidation: 'success'
+        });
+      } else {
+        this.setState({
+          formControlInputValidation: 'form-control-invalid',
+          formControlButtonValidation: 'danger'
+        });
+      }
+    });
   }
 
   render() {
@@ -31,7 +66,8 @@ export default class ModalInfo extends Component {
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
         backgroundColor: this.props.darkMode ? '#343a40' : '#fff',
-        color: this.props.darkMode ? '#A5A5A5' : '#212529'
+        color: this.props.darkMode ? '#A5A5A5' : '#212529',
+        width: '500px'
       }
     };
 
@@ -47,7 +83,7 @@ export default class ModalInfo extends Component {
         <h3 className="aboutHeader">v{app.version}</h3>
         <div>
           <div className="list-element">
-            <img src={logo} alt="logo" />
+            <img src={logo} alt="logo" id="logo"/>
           </div>
           <div className="list-element">
             Please report any issue:
@@ -121,6 +157,18 @@ export default class ModalInfo extends Component {
               <option>30</option>
               <option>60</option>
             </select>
+          </div>
+          <div className="list-element">
+            <FontAwesomeIcon data-tip data-for='tooltip-access-token' icon={faQuestionCircle}/>&nbsp;Personal access token:
+            <ReactTooltip id='tooltip-access-token' place="right" type="light" effect="solid">
+              <span><strong>No scopes needed at all</strong></span>
+            </ReactTooltip>
+            <form className="input-group personal-access-token-input">
+              <FormControl className={`form-control-sm ${this.state.formControlInputValidation}`}  type="password" value={this.props.accessToken} onChange={event => this.props.handleAccessTokenChange(event.target.value)}/>
+              <div className="input-group-append">
+                <Button bsStyle={this.state.formControlButtonValidation} onClick={() => this.verifyAccessToken(this.props.accessToken)} className="btn-sm"><FontAwesomeIcon icon={faUserCheck} />&nbsp;Verify</Button>
+              </div>
+            </form>
           </div>
         </div>
       </Modal>

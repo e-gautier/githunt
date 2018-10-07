@@ -58,6 +58,8 @@ export default class Header extends Component {
           darkMode={this.props.darkMode}
           repoAmount={this.props.repoAmount}
           handleRepoAmountChange={this.props.handleRepoAmountChange}
+          accessToken={this.props.accessToken}
+          handleAccessTokenChange={this.props.handleAccessTokenChange}
         />
         <Row>
           <div className="col">

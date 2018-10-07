@@ -5,11 +5,13 @@ export default class GithubService {
    *
    * @param {String} sort
    * @param {String} language
+   * @param {number} repoAmount
    * @param {moment} since
    * @param {moment} to
+   * @param {string} accessToken
    * @returns {Promise<Response>}
    */
-  fetchRepos(sort, language, repoAmount, since, to = null) {
+  fetchRepos(sort, language, repoAmount, since, to = null, accessToken = '') {
     const languageQuery = language ? ` language:${language}` : '';
     return fetch(
       `${
@@ -18,7 +20,16 @@ export default class GithubService {
         'YYYY-MM-DD'
       )}..${
         to ? to.format('YYYY-MM-DD') : '*'
-      }${languageQuery}&per_page=${repoAmount}`
+      }${languageQuery}&per_page=${repoAmount}&access_token=${accessToken}`
     );
+  }
+
+  /**
+   *
+   * @param token
+   * @returns {Promise<Response>}
+   */
+  isAccessTokenValid(token) {
+    return fetch(`${this.GITHUB_API}?access_token=${token}`);
   }
 }
