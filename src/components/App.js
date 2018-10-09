@@ -218,6 +218,17 @@ class App extends Component {
       </div>
     );
 
+    const scrollToTopStyles = {
+      position: 'fixed',
+      bottom: 50,
+      right: 30,
+      cursor: 'pointer',
+      transitionDuration: '0.2s',
+      transitionTimingFunction: 'linear',
+      transitionDelay: '0s',
+      zIndex: 1
+    };
+
     return (
       <div className={this.state.darkMode ? 'dark' : 'light'} id="theme-container">
         <div className="App container">
@@ -230,7 +241,7 @@ class App extends Component {
             <title>{app.name}</title>
           </Helmet>
           <ErrorBoundary errorMessage={this.state.error}>
-            <ScrollToTop showUnder={160}>
+            <ScrollToTop showUnder={160} style={scrollToTopStyles}>
               <FontAwesomeIcon icon={faArrowAltCircleUp} size={'3x'} />
             </ScrollToTop>
             <Header
