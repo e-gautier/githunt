@@ -42,6 +42,10 @@ class App extends Component {
       accessToken: localStorage.getItem('githunt.accessToken') ? localStorage.getItem('githunt.accessToken') : '',
       fetching: false
     };
+
+    if (this.state.repos.length === 0) {
+      this.fetchRepos();
+    }
   }
 
   cacheRepos() {

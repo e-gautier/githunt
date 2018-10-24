@@ -11,7 +11,7 @@ export default class GithubService {
    * @param {string} accessToken
    * @returns {Promise<Response>}
    */
-  fetchRepos(sort, language, repoAmount, since, to = null, accessToken = '') {
+  fetchRepos(sort, language, repoAmount, since, to, accessToken = '') {
     const languageQuery = language ? ` language:${language}` : '';
     return fetch(
       `${this.GITHUB_API}/search/repositories?sort=${sort}&q=created:${since.format('YYYY-MM-DD')}..${
