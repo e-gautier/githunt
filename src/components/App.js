@@ -33,7 +33,8 @@ class App extends Component {
           : [],
       period: localStorage.getItem('githunt.period') ? localStorage.getItem('githunt.period') : 'daily',
       language: localStorage.getItem('githunt.language') ? localStorage.getItem('githunt.language') : '',
-      to: localStorage.getItem('githunt.to') ? moment(localStorage.getItem('githunt.to')) : moment(),
+      to: localStorage.getItem('githunt.to') &&
+        moment(localStorage.getItem('githunt.cache.date')).diff(moment(), 'hours') > -23 ? moment(localStorage.getItem('githunt.to')) : moment(),
       darkMode:
         localStorage.getItem('githunt.mode.dark') === 'true'
           ? localStorage.getItem('githunt.mode.dark') === 'true'
@@ -42,10 +43,6 @@ class App extends Component {
       accessToken: localStorage.getItem('githunt.accessToken') ? localStorage.getItem('githunt.accessToken') : '',
       fetching: false
     };
-
-    if (this.state.repos.length === 0) {
-      this.fetchRepos();
-    }
   }
 
   cacheRepos() {
@@ -115,56 +112,37 @@ class App extends Component {
       });
   };
 
+  refreshRepos = () => {
+    this.setState({
+      repos: [],
+      to: moment()
+    });
+  };
+
   handleRepoAmountChange = amount => {
-    this.setState(
-      {
-        repoAmount: amount
-      },
-      () => {
-        this.cacheRepos();
-        this.refreshRepos();
-      }
-    );
+    localStorage.setItem('githunt.repoAmount', amount);
+    this.setState({ repoAmount: amount });
+    this.refreshRepos();
   };
 
   handleAccessTokenChange = token => {
-    this.setState(
-      {
-        accessToken: token
-      },
-      () => {
-        this.cacheRepos();
-      }
-    );
-  };
-
-  refreshRepos = () => {
     this.setState({
-      repos: []
-    });
-    this.fetchRepos();
+        accessToken: token
+      }, () =>
+      this.cacheRepos()
+    );
   };
 
   handlePeriodChange = period => {
     localStorage.setItem('githunt.period', period);
-    this.setState(
-      {
-        period,
-        repos: []
-      },
-      () => this.fetchRepos()
-    );
+    this.setState({ period });
+    this.refreshRepos();
   };
 
   handleLanguageInput = language => {
     localStorage.setItem('githunt.language', language);
-    this.setState(
-      {
-        language,
-        repos: []
-      },
-      () => this.fetchRepos()
-    );
+    this.setState({ language });
+    this.refreshRepos();
   };
 
   switchMode = checked => {
@@ -266,7 +244,7 @@ class App extends Component {
               <InfiniteScroll
                 pageStart={0}
                 loadMore={() => this.state.fetching || this.fetchRepos(this.state.to)}
-                hasMore={true || false}
+                hasMore={true}
                 loader={loader}
               >
                 {rows}
