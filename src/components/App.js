@@ -33,8 +33,11 @@ class App extends Component {
           : [],
       period: localStorage.getItem('githunt.period') ? localStorage.getItem('githunt.period') : 'daily',
       language: localStorage.getItem('githunt.language') ? localStorage.getItem('githunt.language') : '',
-      to: localStorage.getItem('githunt.to') &&
-        moment(localStorage.getItem('githunt.cache.date')).diff(moment(), 'hours') > -23 ? moment(localStorage.getItem('githunt.to')) : moment(),
+      to:
+        localStorage.getItem('githunt.to') &&
+        moment(localStorage.getItem('githunt.cache.date')).diff(moment(), 'hours') > -23
+          ? moment(localStorage.getItem('githunt.to'))
+          : moment(),
       darkMode:
         localStorage.getItem('githunt.mode.dark') === 'true'
           ? localStorage.getItem('githunt.mode.dark') === 'true'
@@ -126,10 +129,11 @@ class App extends Component {
   };
 
   handleAccessTokenChange = token => {
-    this.setState({
+    this.setState(
+      {
         accessToken: token
-      }, () =>
-      this.cacheRepos()
+      },
+      () => this.cacheRepos()
     );
   };
 
