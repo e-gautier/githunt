@@ -23,3 +23,12 @@ h1:first-letter {
   vertical-align: -60% !important;
   cursor: pointer;
 }
+
+.forms {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buttons {
+  min-width: 55px;
+}
