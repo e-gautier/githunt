@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+import '../../node_modules/animate.css/animate.min.css';
 import '../assets/scss/App.css';
 import Header from './header';
 import ErrorBoundary from './errorBoundary';
@@ -11,9 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt, faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import InfiniteScroll from 'react-infinite-scroller';
 import Date from './date';
-import { Row } from 'react-bootstrap';
 import Repo from './repo';
-import Fade from 'react-reveal';
 import ScrollToTop from 'react-scroll-up';
 
 class App extends Component {
@@ -162,32 +161,30 @@ class App extends Component {
     );
   };
 
+
   render() {
-    let rows = [];
-    this.state.repos.map((repos, index) => {
-      return rows.push(
-        <Fade duration={300} key={index}>
-          <Date since={repos.since} to={repos.to} />
-          <Row>
-            {repos.elements.map(repo => (
-              <Repo
-                key={repo.id}
-                fullName={repo.full_name}
-                description={repo.description}
-                forks={repo.forks_count}
-                stars={repo.stargazers_count}
-                openIssues={repo.open_issues}
-                htmlURL={repo.html_url}
-                createdAt={repo.created_at}
-                watchers={repo.watchers_count}
-                license={repo.license ? repo.license.key : null}
-                darkMode={this.state.darkMode}
-              />
-            ))}
-          </Row>
-        </Fade>
-      );
-    });
+    let rows = this.state.repos.map((repos, index) => (
+      <div className="animated fadeIn" key={index}>
+        <div className="text-center w-100"><Date since={repos.since} to={repos.to} /></div>
+        <div className="row">
+          {repos.elements.map(repo => (
+            <Repo
+              key={repo.id}
+              fullName={repo.full_name}
+              description={repo.description}
+              forks={repo.forks_count}
+              stars={repo.stargazers_count}
+              openIssues={repo.open_issues}
+              htmlURL={repo.html_url}
+              createdAt={repo.created_at}
+              watchers={repo.watchers_count}
+              license={repo.license ? repo.license.key : null}
+              darkMode={this.state.darkMode}
+            />
+          ))}
+        </div>
+      </div>
+    ));
 
     const loader = (
       <div className="loader-small" key={0}>
@@ -244,7 +241,7 @@ class App extends Component {
               accessToken={this.state.accessToken}
               handleAccessTokenChange={this.handleAccessTokenChange}
             />
-            <Fade duration={300}>
+            <div className="animated fadeIn">
               <InfiniteScroll
                 pageStart={0}
                 loadMore={() => this.state.fetching || this.fetchRepos(this.state.to)}
@@ -253,7 +250,7 @@ class App extends Component {
               >
                 {rows}
               </InfiniteScroll>
-            </Fade>
+            </div>
           </ErrorBoundary>
         </div>
       </div>

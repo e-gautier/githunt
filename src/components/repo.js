@@ -24,7 +24,7 @@ export default class Repo extends Component {
     ) : null;
 
     return (
-      <div className="col-4">
+      <div className="col-md-4">
         <div className="card">
           <div className="card-body">
             <h5 className="card-title">
