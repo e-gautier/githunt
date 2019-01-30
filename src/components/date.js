@@ -2,7 +2,7 @@ import React from 'react';
 import '../assets/scss/date.css';
 import moment from 'moment';
 
-export default function date(props) {
+export default props => {
   return (
     <div className="date">
       {moment(props.since).fromNow()} -{' '}

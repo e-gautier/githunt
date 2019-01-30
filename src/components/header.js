@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import logo from '../assets/img/logo.png';
 import '../assets/scss/header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSyncAlt, faInfoCircle, faCheck } from '@fortawesome/free-solid-svg-icons';
-import ModalInfo from '../components/modalInfo';
-import { Button } from 'react-bootstrap';
+import { faSyncAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import Settings from './settings';
 import app from '../../package.json';
+import { connect } from "react-redux";
+import { PERIOD, setLanguageAndRefresh, setPeriodAndRefresh } from "../actions/settings";
+import { setRepos } from "../actions/repos";
+import LanguageForm from "./languageForm";
 
-export default class Header extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       openAbout: false,
-      language: props.language
     };
   }
 
@@ -29,28 +31,18 @@ export default class Header extends Component {
     });
   };
 
-  handleChange = event => {
-    this.setState({ language: event.target.value });
-  };
-
   render() {
-    const refreshIcon = this.props.repos ? (
-      <FontAwesomeIcon onClick={this.props.refreshRepos} icon={faSyncAlt} size="lg" className="icon" />
+    const refreshIcon = this.props.repos.repos.length > 0 ? (
+      <FontAwesomeIcon onClick={() => this.props.setRepos([])} icon={faSyncAlt} size="lg" className="icon" />
     ) : (
       <FontAwesomeIcon icon={faSyncAlt} size="lg" className="icon" spin />
     );
 
     return (
       <div>
-        <ModalInfo
+        <Settings
           openAbout={this.state.openAbout}
           closeAbout={this.closeAbout}
-          switchMode={this.props.switchMode}
-          darkMode={this.props.darkMode}
-          repoAmount={this.props.repoAmount}
-          handleRepoAmountChange={this.props.handleRepoAmountChange}
-          accessToken={this.props.accessToken}
-          handleAccessTokenChange={this.props.handleAccessTokenChange}
         />
         <div className="row">
           <div className="col-md-6">
@@ -64,36 +56,21 @@ export default class Header extends Component {
             <div className="forms">
               <div className="mx-1">
                 <select
-                  value={this.props.period}
-                  onChange={event => this.props.handlePeriodChange(event.target.value)}
+                  value={this.props.settings.period}
+                  onChange={event => this.props.setPeriodAndRefresh(event.target.value)}
                   className="form-control form-control-sm"
                 >
-                  <option value="daily">Daily</option>
-                  <option value="weekly">Weekly</option>
-                  <option value="monthly">Monthly</option>
-                  <option value="yearly">Yearly</option>
+                  <option value={PERIOD.DAILY}>Daily</option>
+                  <option value={PERIOD.WEEKLY}>Weekly</option>
+                  <option value={PERIOD.MONTHLY}>Monthly</option>
+                  <option value={PERIOD.YEARLY}>Yearly</option>
                 </select>
               </div>
               <div className="mx-1">
-                <form onSubmit={event => event.preventDefault()} className="input-group">
-                  <input
-                    type="text"
-                    placeholder="All languages"
-                    className="form-control form-control-sm"
-                    value={this.state.language}
-                    onChange={this.handleChange}
-                  />
-                  <div className="input-group-append">
-                    <Button
-                      type="submit"
-                      title="Valid"
-                      onClick={() => this.props.handleLanguageInput(this.state.language)}
-                      className="btn-sm"
-                    >
-                      <FontAwesomeIcon icon={faCheck} />
-                    </Button>
-                  </div>
-                </form>
+                <LanguageForm
+                  onSubmit={form => this.props.setLanguageAndRefresh(form.language)}
+                  initialValues={{language: this.props.settings.language}}
+                />
               </div>
               <div className="mx-1 buttons">
                 {refreshIcon}
@@ -106,3 +83,11 @@ export default class Header extends Component {
     );
   }
 }
+
+Header = connect(state => { return state }, {
+  setRepos,
+  setLanguageAndRefresh,
+  setPeriodAndRefresh
+})(Header);
+
+export default Header;

@@ -52,3 +52,22 @@
   display: block;
   margin: 0 auto;
 }
+
+.theme-selector {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.theme-selector-dark {
+  background-color: #111111;
+}
+
+.theme-selector-light {
+  background-color: #ece1e1;
+}
+
+.theme-selected {
+  border: 3px solid #aaaaaa;
+}

@@ -6,14 +6,14 @@ import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrush, faUserCheck, faExternalLinkAlt, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { Button, FormControl } from 'react-bootstrap';
-import Switch from 'react-switch';
-import GithubService from '../services/githubService';
+import * as github from '../middlewares/github';
 import ReactTooltip from 'react-tooltip';
+import { connect } from "react-redux";
+import { setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from "../actions/settings";
 
 Modal.setAppElement('#root');
 
-export default class ModalInfo extends Component {
+class Settings extends Component {
   GITHUNT_REPO = process.env.REACT_APP_GITHUNT_REPO;
   CHROME_WEB_STORE = process.env.REACT_APP_CHROME_WEB_STORE;
   FIREFOX_ADDON = process.env.REACT_APP_FIREFOX_ADDON;
@@ -23,40 +23,41 @@ export default class ModalInfo extends Component {
 
     this.state = {
       formControlInputValidation: '',
-      formControlButtonValidation: 'default'
+      formControlButtonValidation: 'btn-default',
+      accessToken: props.settings.accessToken
     };
   }
 
-  flushCache() {
+  reset() {
     localStorage.clear();
     window.location.reload();
   }
 
-  verifyAccessToken(token) {
-    if (token === '') {
+  async verifyAccessToken() {
+    if (this.state.accessToken === '') {
       return this.setState({
         formControlInputValidation: 'form-control-empty',
-        formControlButtonValidation: 'warning'
+        formControlButtonValidation: 'btn-warning'
       });
     }
 
-    const githubService = new GithubService();
-    githubService.isAccessTokenValid(token).then(response => {
-      if (response.status === 200) {
-        this.setState({
-          formControlInputValidation: 'form-control-valid',
-          formControlButtonValidation: 'success'
-        });
-      } else {
-        this.setState({
-          formControlInputValidation: 'form-control-invalid',
-          formControlButtonValidation: 'danger'
-        });
-      }
-    });
+    try {
+      await github.isAccessTokenValid(this.state.accessToken);
+      this.setState({
+        formControlInputValidation: 'form-control-valid',
+        formControlButtonValidation: 'btn-success'
+      });
+      this.props.setPersonalAccessToken(this.state.accessToken);
+    } catch (error) {
+      this.setState({
+        formControlInputValidation: 'form-control-invalid',
+        formControlButtonValidation: 'btn-danger'
+      });
+    }
   }
 
   render() {
+
     const styles = {
       content: {
         top: '50%',
@@ -65,8 +66,8 @@ export default class ModalInfo extends Component {
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
-        backgroundColor: this.props.darkMode ? '#343a40' : '#fff',
-        color: this.props.darkMode ? '#A5A5A5' : '#212529',
+        backgroundColor: this.props.settings.theme === THEME.DARK ? '#343a40' : '#fff',
+        color: this.props.settings.theme === THEME.DARK ? '#A5A5A5' : '#212529',
         width: '500px'
       }
     };
@@ -88,9 +89,9 @@ export default class ModalInfo extends Component {
           <div className="list-element">
             Please report any issue:
             <a className="float-right" target="_blank" href={this.GITHUNT_REPO}>
-              <Button bsSize="small">
+              <button className="btn btn-sm">
                 <FontAwesomeIcon icon={faGithub} />
-              </Button>
+              </button>
             </a>
           </div>
           <div className="list-element">
@@ -109,32 +110,22 @@ export default class ModalInfo extends Component {
           </div>
           <div className="list-element">
             Switch light/dark mode
-            <Switch
-              className="float-right"
-              onChange={checked => this.props.switchMode(checked)}
-              checked={this.props.darkMode}
-              onColor="#111111"
-              onHandleColor="#555555"
-              handleDiameter={20}
-              uncheckedIcon={false}
-              checkedIcon={false}
-              height={10}
-              width={40}
-              boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-              activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-            />
+            <div className="float-right" style={{display: "flex"}}>
+              <div className={`theme-selector theme-selector-light ${this.props.settings.theme === THEME.LIGHT && "theme-selected"}`} onClick={() => this.props.setTheme(THEME.LIGHT)}/>
+              <div className={`theme-selector theme-selector-dark ${this.props.settings.theme === THEME.DARK && "theme-selected"}`} onClick={() => this.props.setTheme(THEME.DARK)}/>
+            </div>
           </div>
           <div className="list-element">
             Invalid caches:
-            <Button onClick={this.flushCache} bsSize="small" bsStyle="danger" className="float-right">
+            <button onClick={this.reset} className="btn btn-danger btn-sm float-right">
               <FontAwesomeIcon icon={faBrush} />
-            </Button>
+            </button>
           </div>
           <div className="list-element">
             Repos pool size:
             <select
-              value={this.props.repoAmount}
-              onChange={event => this.props.handleRepoAmountChange(event.target.value)}
+              value={this.props.settings.repoAmount}
+              onChange={event => this.props.setRepoPoolSizeAndRefresh(event.target.value)}
               className="form-control form-control-sm select-amount"
             >
               <option>3</option>
@@ -149,7 +140,7 @@ export default class ModalInfo extends Component {
             <ReactTooltip
               id="tooltip-access-token"
               place="right"
-              type={this.props.darkMode ? 'light' : 'dark'}
+              type={this.props.settings.theme.toLowerCase()}
               effect="solid"
             >
               <span>
@@ -157,21 +148,20 @@ export default class ModalInfo extends Component {
               </span>
             </ReactTooltip>
             <form className="input-group personal-access-token-input">
-              <FormControl
-                className={`form-control-sm ${this.state.formControlInputValidation}`}
+              <input
+                className={`form-control form-control-sm ${this.state.formControlInputValidation}`}
                 type="password"
-                value={this.props.accessToken}
-                onChange={event => this.props.handleAccessTokenChange(event.target.value)}
+                value={this.state.accessToken}
+                onChange={event => this.setState({accessToken: event.target.value})}
               />
               <div className="input-group-append">
-                <Button
-                  bsStyle={this.state.formControlButtonValidation}
-                  onClick={() => this.verifyAccessToken(this.props.accessToken)}
-                  className="btn-sm"
+                <button
+                  onClick={() => this.verifyAccessToken()}
+                  className={`btn btn-sm ${this.state.formControlButtonValidation}`}
                 >
                   <FontAwesomeIcon icon={faUserCheck} />
                   &nbsp;Verify
-                </Button>
+                </button>
               </div>
             </form>
           </div>
@@ -180,3 +170,11 @@ export default class ModalInfo extends Component {
     );
   }
 }
+
+Settings = connect(state => {return state}, {
+  setTheme,
+  setRepoPoolSizeAndRefresh,
+  setPersonalAccessToken
+})(Settings);
+
+export default Settings;

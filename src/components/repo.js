@@ -7,14 +7,13 @@ import {
   faExclamationCircle,
   faGavel
 } from '@fortawesome/free-solid-svg-icons';
+import { connect } from "react-redux";
 
-export default class Repo extends Component {
+class Repo extends Component {
   render() {
     const license = this.props.license ? (
       <div
-        className={`badge ${
-          this.props.darkMode ? 'badge-dark' : 'badge-light'
-        }`}
+        className={`badge badge-${this.props.settings.theme.toLowerCase()}`}
         title="license"
       >
         <FontAwesomeIcon icon={faGavel} />
@@ -41,9 +40,7 @@ export default class Repo extends Component {
           <div className="card-footer text-muted">
             <div className="row align-self-center">
               <div
-                className={`badge ${
-                  this.props.darkMode ? 'badge-dark' : 'badge-light'
-                }`}
+                className={`badge badge-${this.props.settings.theme.toLowerCase()}`}
                 title="forks"
               >
                 <FontAwesomeIcon icon={faCodeBranch} />
@@ -51,9 +48,7 @@ export default class Repo extends Component {
                 <span className="metadataText">{this.props.forks}</span>
               </div>
               <div
-                className={`badge ${
-                  this.props.darkMode ? 'badge-dark' : 'badge-light'
-                }`}
+                className={`badge badge-${this.props.settings.theme.toLowerCase()}`}
                 title="stars"
               >
                 <FontAwesomeIcon icon={faStar} />
@@ -61,9 +56,7 @@ export default class Repo extends Component {
                 <span className="metadataText">{this.props.stars}</span>
               </div>
               <div
-                className={`badge ${
-                  this.props.darkMode ? 'badge-dark' : 'badge-light'
-                }`}
+                className={`badge badge-${this.props.settings.theme.toLowerCase()}`}
                 title="issues"
               >
                 <FontAwesomeIcon icon={faExclamationCircle} />
@@ -78,3 +71,7 @@ export default class Repo extends Component {
     );
   }
 }
+
+Repo = connect(state => { return state })(Repo);
+
+export default Repo;
