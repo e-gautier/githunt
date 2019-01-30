@@ -2,9 +2,13 @@ import {
   PERIOD,
   REPOS_POOL_SIZE,
   THEME,
-  setTheme, setPeriod, setLanguage, setReposPoolSize, setPersonalAccessToken
-} from "../actions/settings";
-import { handleActions } from "redux-actions";
+  setTheme,
+  setPeriod,
+  setLanguage,
+  setReposPoolSize,
+  setPersonalAccessToken
+} from '../actions/settings';
+import { handleActions } from 'redux-actions';
 
 const init = {
   theme: THEME.LIGHT,
@@ -29,7 +33,7 @@ export default handleActions(
     },
     [setPersonalAccessToken]: (state, action) => {
       return { ...state, accessToken: action.payload };
-    },
+    }
   },
   init
 );

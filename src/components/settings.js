@@ -8,8 +8,8 @@ import { faBrush, faUserCheck, faExternalLinkAlt, faQuestionCircle } from '@fort
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import * as github from '../middlewares/github';
 import ReactTooltip from 'react-tooltip';
-import { connect } from "react-redux";
-import { setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from "../actions/settings";
+import { connect } from 'react-redux';
+import { setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from '../actions/settings';
 
 Modal.setAppElement('#root');
 
@@ -57,7 +57,6 @@ class Settings extends Component {
   }
 
   render() {
-
     const styles = {
       content: {
         top: '50%',
@@ -110,9 +109,17 @@ class Settings extends Component {
           </div>
           <div className="list-element">
             Switch light/dark mode
-            <div className="float-right" style={{display: "flex"}}>
-              <div className={`theme-selector theme-selector-light ${this.props.settings.theme === THEME.LIGHT && "theme-selected"}`} onClick={() => this.props.setTheme(THEME.LIGHT)}/>
-              <div className={`theme-selector theme-selector-dark ${this.props.settings.theme === THEME.DARK && "theme-selected"}`} onClick={() => this.props.setTheme(THEME.DARK)}/>
+            <div className="float-right" style={{ display: 'flex' }}>
+              <div
+                className={`theme-selector theme-selector-light ${this.props.settings.theme === THEME.LIGHT &&
+                  'theme-selected'}`}
+                onClick={() => this.props.setTheme(THEME.LIGHT)}
+              />
+              <div
+                className={`theme-selector theme-selector-dark ${this.props.settings.theme === THEME.DARK &&
+                  'theme-selected'}`}
+                onClick={() => this.props.setTheme(THEME.DARK)}
+              />
             </div>
           </div>
           <div className="list-element">
@@ -152,7 +159,7 @@ class Settings extends Component {
                 className={`form-control form-control-sm ${this.state.formControlInputValidation}`}
                 type="password"
                 value={this.state.accessToken}
-                onChange={event => this.setState({accessToken: event.target.value})}
+                onChange={event => this.setState({ accessToken: event.target.value })}
               />
               <div className="input-group-append">
                 <button
@@ -171,10 +178,15 @@ class Settings extends Component {
   }
 }
 
-Settings = connect(state => {return state}, {
-  setTheme,
-  setRepoPoolSizeAndRefresh,
-  setPersonalAccessToken
-})(Settings);
+Settings = connect(
+  state => {
+    return state;
+  },
+  {
+    setTheme,
+    setRepoPoolSizeAndRefresh,
+    setPersonalAccessToken
+  }
+)(Settings);
 
 export default Settings;

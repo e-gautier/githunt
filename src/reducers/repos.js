@@ -1,13 +1,6 @@
-import {
-  requestRepos,
-  setRepos,
-  receiveRepos,
-  tryAgain,
-  setToDate,
-  throwError
-} from "../actions/repos";
-import moment from "moment";
-import { handleActions } from "redux-actions";
+import { requestRepos, setRepos, receiveRepos, tryAgain, setToDate, throwError } from '../actions/repos';
+import moment from 'moment';
+import { handleActions } from 'redux-actions';
 
 const init = {
   fetching: false,
@@ -16,7 +9,8 @@ const init = {
   cacheDate: moment()
 };
 
-export default handleActions({
+export default handleActions(
+  {
     [throwError]: (state, action) => {
       return { ...state, error: action.payload };
     },
@@ -35,10 +29,7 @@ export default handleActions({
     [receiveRepos]: (state, action) => {
       return {
         ...state,
-        repos: [
-          ...state.repos,
-          action.payload
-        ],
+        repos: [...state.repos, action.payload],
         fetching: false
       };
     }

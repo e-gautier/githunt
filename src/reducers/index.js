@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import settings from "./settings";
-import repos from "./repos";
-import storage from "redux-persist/lib/storage";
-import { persistReducer } from "redux-persist";
-import { reducer as formReducer } from 'redux-form'
+import settings from './settings';
+import repos from './repos';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
+import { reducer as formReducer } from 'redux-form';
 
 const reposPersistConfig = {
   key: 'repos',

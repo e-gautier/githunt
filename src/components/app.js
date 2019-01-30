@@ -13,9 +13,9 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Date from './date';
 import Repo from './repo';
 import ScrollToTop from 'react-scroll-up';
-import { connect } from "react-redux";
-import { fetchRepos, setRepos, setToDate, tryAgain } from "../actions/repos";
-import { PERIOD } from "../actions/settings";
+import { connect } from 'react-redux';
+import { fetchRepos, setRepos, setToDate, tryAgain } from '../actions/repos';
+import { PERIOD } from '../actions/settings';
 
 class App extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class App extends Component {
   }
 
   fetchRepos = () => {
-    const lastRepo = this.props.repos.repos[this.props.repos.repos.length-1];
+    const lastRepo = this.props.repos.repos[this.props.repos.repos.length - 1];
     const to = lastRepo ? moment(lastRepo.since) : moment();
 
     const since = (period => {
@@ -59,7 +59,9 @@ class App extends Component {
   render() {
     const rows = this.props.repos.repos.map((repos, index) => (
       <div className="animated fadeIn" key={index}>
-        <div className="text-center w-100"><Date since={repos.since} to={repos.to}/></div>
+        <div className="text-center w-100">
+          <Date since={repos.since} to={repos.to} />
+        </div>
         <div className="row">
           {repos.items.map(repo => (
             <Repo
@@ -86,11 +88,7 @@ class App extends Component {
         <strong>Wait, hunting them down...</strong>
         <br />
         <span>{this.props.repos.error}</span>
-        <span>
-          {this.props.repos.error && (
-            <button onClick={() => this.props.tryAgain()}>try again</button>
-          )}
-        </span>
+        <span>{this.props.repos.error && <button onClick={() => this.props.tryAgain()}>try again</button>}</span>
       </div>
     );
 
@@ -120,7 +118,7 @@ class App extends Component {
             <ScrollToTop showUnder={160} style={scrollToTopStyles}>
               <FontAwesomeIcon icon={faArrowAltCircleUp} size={'3x'} />
             </ScrollToTop>
-            <Header/>
+            <Header />
             <div className="animated fadeIn">
               <InfiniteScroll
                 pageStart={0}
@@ -138,11 +136,16 @@ class App extends Component {
   }
 }
 
-App = connect(state => {return state}, {
-  tryAgain,
-  fetchRepos,
-  setRepos,
-  setToDate
-})(App);
+App = connect(
+  state => {
+    return state;
+  },
+  {
+    tryAgain,
+    fetchRepos,
+    setRepos,
+    setToDate
+  }
+)(App);
 
 export default App;

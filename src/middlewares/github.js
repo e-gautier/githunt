@@ -11,12 +11,12 @@ export const GITHUB_API = 'https://api.github.com';
  * @param accessToken
  * @returns {Promise<any>}
  */
-export async function fetchRepos(sort, language, repoAmount, since, to, accessToken = "") {
+export async function fetchRepos(sort, language, repoAmount, since, to, accessToken = '') {
   const languageQuery = language ? ` language:${language}` : '';
   const response = await fetch(
     `${GITHUB_API}/search/repositories?sort=${sort}&q=created:${since.format('YYYY-MM-DD')}..${
       to ? to.format('YYYY-MM-DD') : '*'
-      }${languageQuery}&per_page=${repoAmount}&access_token=${accessToken}`
+    }${languageQuery}&per_page=${repoAmount}&access_token=${accessToken}`
   );
   if (!response.ok) {
     const body = await response.json();

@@ -1,7 +1,7 @@
-import React from "react";
-import { reduxForm, Field } from "redux-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import React from 'react';
+import { reduxForm, Field } from 'redux-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const LanguageForm = props => {
   return (
@@ -14,17 +14,12 @@ const LanguageForm = props => {
         className="form-control form-control-sm"
       />
       <div className="input-group-append">
-        <button
-          type="submit"
-          title="Valid"
-          className="btn btn-sm"
-          style={{zIndex: "unset"}}
-        >
+        <button type="submit" title="Valid" className="btn btn-sm" style={{ zIndex: 'unset' }}>
           <FontAwesomeIcon icon={faCheck} />
         </button>
       </div>
     </form>
-  )
+  );
 };
 
 export default reduxForm({

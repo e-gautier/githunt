@@ -5,17 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import Settings from './settings';
 import app from '../../package.json';
-import { connect } from "react-redux";
-import { PERIOD, setLanguageAndRefresh, setPeriodAndRefresh } from "../actions/settings";
-import { setRepos } from "../actions/repos";
-import LanguageForm from "./languageForm";
+import { connect } from 'react-redux';
+import { PERIOD, setLanguageAndRefresh, setPeriodAndRefresh } from '../actions/settings';
+import { setRepos } from '../actions/repos';
+import LanguageForm from './languageForm';
 
 class Header extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      openAbout: false,
+      openAbout: false
     };
   }
 
@@ -32,18 +32,16 @@ class Header extends Component {
   };
 
   render() {
-    const refreshIcon = this.props.repos.repos.length > 0 ? (
-      <FontAwesomeIcon onClick={() => this.props.setRepos([])} icon={faSyncAlt} size="lg" className="icon" />
-    ) : (
-      <FontAwesomeIcon icon={faSyncAlt} size="lg" className="icon" spin />
-    );
+    const refreshIcon =
+      this.props.repos.repos.length > 0 ? (
+        <FontAwesomeIcon onClick={() => this.props.setRepos([])} icon={faSyncAlt} size="lg" className="icon" />
+      ) : (
+        <FontAwesomeIcon icon={faSyncAlt} size="lg" className="icon" spin />
+      );
 
     return (
       <div>
-        <Settings
-          openAbout={this.state.openAbout}
-          closeAbout={this.closeAbout}
-        />
+        <Settings openAbout={this.state.openAbout} closeAbout={this.closeAbout} />
         <div className="row">
           <div className="col-md-6">
             <div className="row title-container">
@@ -69,7 +67,7 @@ class Header extends Component {
               <div className="mx-1">
                 <LanguageForm
                   onSubmit={form => this.props.setLanguageAndRefresh(form.language)}
-                  initialValues={{language: this.props.settings.language}}
+                  initialValues={{ language: this.props.settings.language }}
                 />
               </div>
               <div className="mx-1 buttons">
@@ -84,10 +82,15 @@ class Header extends Component {
   }
 }
 
-Header = connect(state => { return state }, {
-  setRepos,
-  setLanguageAndRefresh,
-  setPeriodAndRefresh
-})(Header);
+Header = connect(
+  state => {
+    return state;
+  },
+  {
+    setRepos,
+    setLanguageAndRefresh,
+    setPeriodAndRefresh
+  }
+)(Header);
 
 export default Header;
