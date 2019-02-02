@@ -1,8 +1,8 @@
-import React from "react";
-import { reduxForm, Field, SubmissionError } from "redux-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCheck } from "@fortawesome/free-solid-svg-icons";
-import * as github from "../middlewares/github";
+import React from 'react';
+import { reduxForm, Field, SubmissionError } from 'redux-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCheck } from '@fortawesome/free-solid-svg-icons';
+import * as github from '../middlewares/github';
 
 async function verifyAccessToken(form, props) {
   if (form.accessToken === '') {
@@ -43,9 +43,12 @@ const tokenInput = props => {
 const tokenForm = props => {
   const error = (error => {
     switch (error) {
-      case 'empty': return 'btn-warning';
-      case 'invalid': return 'btn-danger';
-      default: return props.submitSucceeded ? 'btn-success' : 'btn-default';
+      case 'empty':
+        return 'btn-warning';
+      case 'invalid':
+        return 'btn-danger';
+      default:
+        return props.submitSucceeded ? 'btn-success' : 'btn-default';
     }
   })(props.error);
 
@@ -62,10 +65,7 @@ const tokenForm = props => {
         submitSucceeded={props.submitSucceeded}
       />
       <div className="input-group-append">
-        <button
-          type="submit"
-          className={`btn btn-sm ${error}`}
-        >
+        <button type="submit" className={`btn btn-sm ${error}`}>
           <FontAwesomeIcon icon={faUserCheck} />
           &nbsp;Verify
         </button>
@@ -75,5 +75,5 @@ const tokenForm = props => {
 };
 
 export default reduxForm({
-  form: "tokenForm"
+  form: 'tokenForm'
 })(tokenForm);

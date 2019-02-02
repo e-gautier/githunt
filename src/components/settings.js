@@ -9,7 +9,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 import { setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from '../actions/settings';
-import TokenForm from "./tokenForm";
+import TokenForm from './tokenForm';
 
 Modal.setAppElement('#root');
 
@@ -135,7 +135,8 @@ class Settings extends Component {
 Settings = connect(
   state => {
     return state;
-  }, {
+  },
+  {
     setTheme,
     setRepoPoolSizeAndRefresh,
     setPersonalAccessToken
