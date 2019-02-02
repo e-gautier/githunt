@@ -32,7 +32,7 @@ export async function fetchRepos(sort, language, repoAmount, since, to, accessTo
  * @returns {Promise<any>}
  */
 export async function isAccessTokenValid(token) {
-  const response = await fetch(`${this.GITHUB_API}?access_token=${token}`);
+  const response = await fetch(`${GITHUB_API}?access_token=${token}`);
   if (!response.ok) {
     throw Error(response.messageText);
   }

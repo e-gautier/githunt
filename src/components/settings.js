@@ -4,12 +4,12 @@ import '../assets/scss/modal.css';
 import logo from '../assets/img/logo.png';
 import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBrush, faUserCheck, faExternalLinkAlt, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBrush, faExternalLinkAlt, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import * as github from '../middlewares/github';
 import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 import { setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from '../actions/settings';
+import TokenForm from "./tokenForm";
 
 Modal.setAppElement('#root');
 
@@ -18,42 +18,9 @@ class Settings extends Component {
   CHROME_WEB_STORE = process.env.REACT_APP_CHROME_WEB_STORE;
   FIREFOX_ADDON = process.env.REACT_APP_FIREFOX_ADDON;
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      formControlInputValidation: '',
-      formControlButtonValidation: 'btn-default',
-      accessToken: props.settings.accessToken
-    };
-  }
-
   reset() {
     localStorage.clear();
     window.location.reload();
-  }
-
-  async verifyAccessToken() {
-    if (this.state.accessToken === '') {
-      return this.setState({
-        formControlInputValidation: 'form-control-empty',
-        formControlButtonValidation: 'btn-warning'
-      });
-    }
-
-    try {
-      await github.isAccessTokenValid(this.state.accessToken);
-      this.setState({
-        formControlInputValidation: 'form-control-valid',
-        formControlButtonValidation: 'btn-success'
-      });
-      this.props.setPersonalAccessToken(this.state.accessToken);
-    } catch (error) {
-      this.setState({
-        formControlInputValidation: 'form-control-invalid',
-        formControlButtonValidation: 'btn-danger'
-      });
-    }
   }
 
   render() {
@@ -154,23 +121,10 @@ class Settings extends Component {
                 <strong>No scopes needed at all</strong>
               </span>
             </ReactTooltip>
-            <form className="input-group personal-access-token-input">
-              <input
-                className={`form-control form-control-sm ${this.state.formControlInputValidation}`}
-                type="password"
-                value={this.state.accessToken}
-                onChange={event => this.setState({ accessToken: event.target.value })}
-              />
-              <div className="input-group-append">
-                <button
-                  onClick={() => this.verifyAccessToken()}
-                  className={`btn btn-sm ${this.state.formControlButtonValidation}`}
-                >
-                  <FontAwesomeIcon icon={faUserCheck} />
-                  &nbsp;Verify
-                </button>
-              </div>
-            </form>
+            <TokenForm
+              onSubmit={form => this.props.setPersonalAccessToken(form.accessToken)}
+              initialValues={{ accessToken: this.props.settings.accessToken }}
+            />
           </div>
         </div>
       </Modal>
@@ -181,8 +135,7 @@ class Settings extends Component {
 Settings = connect(
   state => {
     return state;
-  },
-  {
+  }, {
     setTheme,
     setRepoPoolSizeAndRefresh,
     setPersonalAccessToken

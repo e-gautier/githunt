@@ -14,7 +14,8 @@ const init = {
   theme: THEME.LIGHT,
   period: PERIOD.DAILY,
   language: '',
-  repoAmount: REPOS_POOL_SIZE.THIRTY
+  repoAmount: REPOS_POOL_SIZE.THIRTY,
+  accessToken: ''
 };
 
 export default handleActions(
@@ -32,6 +33,7 @@ export default handleActions(
       return { ...state, repoAmount: action.payload };
     },
     [setPersonalAccessToken]: (state, action) => {
+      console.log(action.payload);
       return { ...state, accessToken: action.payload };
     }
   },
