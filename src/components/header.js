@@ -41,7 +41,7 @@ class Header extends Component {
 
     return (
       <div>
-        <Settings openAbout={this.state.openAbout} closeAbout={this.closeAbout}/>
+        <Settings openAbout={this.state.openAbout} closeAbout={this.closeAbout} />
         <div className="row">
           <div className="col-12 my-1 col-lg-4 mx-lg-0">
             <div className="d-flex justify-content-center">
@@ -50,7 +50,7 @@ class Header extends Component {
             </div>
             <p className="text-center">Hunting the best GitHub projects</p>
           </div>
-          <div className="col-lg-2"/>
+          <div className="col-lg-2" />
           <div className="col-12 col-lg-6 text-center row ml-1">
             <div className="col-12 p-1 col-lg-4 p-lg-3 mt-lg-3">
               <select
@@ -72,7 +72,7 @@ class Header extends Component {
             </div>
             <div className="col-12 p-1 col-lg-3 p-lg-3 mt-lg-3">
               {refreshIcon}
-              <FontAwesomeIcon onClick={this.openAbout} icon={faInfoCircle} size="lg" className="icon ml-4"/>
+              <FontAwesomeIcon onClick={this.openAbout} icon={faInfoCircle} size="lg" className="icon ml-4" />
             </div>
           </div>
         </div>
