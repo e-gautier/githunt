@@ -41,39 +41,38 @@ class Header extends Component {
 
     return (
       <div>
-        <Settings openAbout={this.state.openAbout} closeAbout={this.closeAbout} />
+        <Settings openAbout={this.state.openAbout} closeAbout={this.closeAbout}/>
         <div className="row">
-          <div className="col-md-6">
-            <div className="row title-container">
+          <div className="col-12 my-1 col-lg-4 mx-lg-0">
+            <div className="d-flex justify-content-center">
               <img src={logo} className="logo-main" alt="logo" />
               <h1>{app.name}</h1>
             </div>
-            <span>Hunting the best GitHub projects</span>
+            <p className="text-center">Hunting the best GitHub projects</p>
           </div>
-          <div className="col-md-6 options-container align-self-center">
-            <div className="forms">
-              <div className="mx-1">
-                <select
-                  value={this.props.settings.period}
-                  onChange={event => this.props.setPeriodAndRefresh(event.target.value)}
-                  className="form-control form-control-sm"
-                >
-                  <option value={PERIOD.DAILY}>Daily</option>
-                  <option value={PERIOD.WEEKLY}>Weekly</option>
-                  <option value={PERIOD.MONTHLY}>Monthly</option>
-                  <option value={PERIOD.YEARLY}>Yearly</option>
-                </select>
-              </div>
-              <div className="mx-1">
-                <LanguageForm
-                  onSubmit={form => this.props.setLanguageAndRefresh(form.language)}
-                  initialValues={{ language: this.props.settings.language }}
-                />
-              </div>
-              <div className="mx-1 buttons">
-                {refreshIcon}
-                <FontAwesomeIcon onClick={this.openAbout} icon={faInfoCircle} size="lg" className="icon ml-2" />
-              </div>
+          <div className="col-lg-2"/>
+          <div className="col-12 col-lg-6 text-center row ml-1">
+            <div className="col-12 p-1 col-lg-4 p-lg-3 mt-lg-3">
+              <select
+                value={this.props.settings.period}
+                onChange={event => this.props.setPeriodAndRefresh(event.target.value)}
+                className="form-control form-control-sm"
+              >
+                <option value={PERIOD.DAILY}>Daily</option>
+                <option value={PERIOD.WEEKLY}>Weekly</option>
+                <option value={PERIOD.MONTHLY}>Monthly</option>
+                <option value={PERIOD.YEARLY}>Yearly</option>
+              </select>
+            </div>
+            <div className="col-12 p-1 col-lg-5 p-lg-3 mt-lg-3">
+              <LanguageForm
+                onSubmit={form => this.props.setLanguageAndRefresh(form.language)}
+                initialValues={{ language: this.props.settings.language }}
+              />
+            </div>
+            <div className="col-12 p-1 col-lg-3 p-lg-3 mt-lg-3">
+              {refreshIcon}
+              <FontAwesomeIcon onClick={this.openAbout} icon={faInfoCircle} size="lg" className="icon ml-4"/>
             </div>
           </div>
         </div>

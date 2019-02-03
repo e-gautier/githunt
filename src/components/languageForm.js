@@ -5,7 +5,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const LanguageForm = props => {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={props.handleSubmit} className="input-group">
       <Field
         component="input"
         name="language"
@@ -14,7 +14,7 @@ const LanguageForm = props => {
         className="form-control form-control-sm"
       />
       <div className="input-group-append">
-        <button type="submit" title="Valid" className="btn btn-sm" style={{ zIndex: 'unset' }}>
+        <button type="submit" title="Valid" className="btn btn-sm btn-default" style={{ zIndex: 'unset' }}>
           <FontAwesomeIcon icon={faCheck} />
         </button>
       </div>

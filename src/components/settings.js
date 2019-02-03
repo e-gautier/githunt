@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import '../assets/scss/modal.css';
+import '../assets/scss/settings.css';
 import logo from '../assets/img/logo.png';
 import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
