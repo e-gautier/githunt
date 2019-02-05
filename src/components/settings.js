@@ -25,7 +25,7 @@ class Settings extends Component {
     const styles = {
       modal: {
         backgroundColor: this.props.settings.theme === THEME.DARK ? '#343a40' : '#fff',
-        color: this.props.settings.theme === THEME.DARK ? '#A5A5A5' : '#212529',
+        color: this.props.settings.theme === THEME.DARK ? '#A5A5A5' : '#212529'
       }
     };
 
