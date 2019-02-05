@@ -15,19 +15,19 @@ class Header extends Component {
     super(props);
 
     this.state = {
-      openAbout: false
+      settingsOpened: false
     };
   }
 
-  openAbout = () => {
+  openSettings = () => {
     this.setState({
-      openAbout: true
+      settingsOpened: true
     });
   };
 
-  closeAbout = () => {
+  closeSettings = () => {
     this.setState({
-      openAbout: false
+      settingsOpened: false
     });
   };
 
@@ -41,7 +41,7 @@ class Header extends Component {
 
     return (
       <div>
-        <Settings openAbout={this.state.openAbout} closeAbout={this.closeAbout} />
+        <Settings settingsOpened={this.state.settingsOpened} closeSettings={this.closeSettings} />
         <div className="row">
           <div className="col-12 my-1 col-lg-4 mx-lg-0">
             <div className="d-flex justify-content-center">
@@ -72,7 +72,7 @@ class Header extends Component {
             </div>
             <div className="col-12 p-1 col-lg-3 p-lg-3 mt-lg-3">
               {refreshIcon}
-              <FontAwesomeIcon onClick={this.openAbout} icon={faInfoCircle} size="lg" className="icon ml-4" />
+              <FontAwesomeIcon onClick={this.openSettings} icon={faInfoCircle} size="lg" className="icon ml-4" />
             </div>
           </div>
         </div>

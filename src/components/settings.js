@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Modal from 'react-modal';
+import Modal from 'react-responsive-modal';
 import '../assets/scss/settings.css';
 import logo from '../assets/img/logo.png';
 import app from '../../package.json';
@@ -10,8 +10,6 @@ import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 import { setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from '../actions/settings';
 import TokenForm from './tokenForm';
-
-Modal.setAppElement('#root');
 
 class Settings extends Component {
   GITHUNT_REPO = process.env.REACT_APP_GITHUNT_REPO;
@@ -25,25 +23,18 @@ class Settings extends Component {
 
   render() {
     const styles = {
-      content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
+      modal: {
         backgroundColor: this.props.settings.theme === THEME.DARK ? '#343a40' : '#fff',
         color: this.props.settings.theme === THEME.DARK ? '#A5A5A5' : '#212529',
-        width: '500px'
       }
     };
 
     return (
       <Modal
-        isOpen={this.props.openAbout}
-        style={styles}
+        open={this.props.settingsOpened}
+        styles={styles}
         contentLabel="Info"
-        onRequestClose={this.props.closeAbout}
+        onClose={this.props.closeSettings}
         closeTimeoutMS={100}
       >
         <h2 className="aboutHeader">About Githunt</h2>
