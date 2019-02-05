@@ -45,7 +45,7 @@ class Settings extends Component {
           </div>
           <div className="list-element">
             Please report any issue:
-            <a className="float-right" target="_blank" href={this.GITHUNT_REPO}>
+            <a className="float-right" target="_blank" rel="noopener noreferrer" href={this.GITHUNT_REPO}>
               <button className="btn btn-sm">
                 <FontAwesomeIcon icon={faGithub} />
               </button>
@@ -53,14 +53,14 @@ class Settings extends Component {
           </div>
           <div className="list-element">
             Chrome web store:
-            <a className="float-right" href={this.CHROME_WEB_STORE} target="_blank">
+            <a className="float-right" href={this.CHROME_WEB_STORE} target="_blank" rel="noopener noreferrer">
               Chrome &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a>
           </div>
           <div className="list-element">
             Firefox addon:
-            <a className="float-right" href={this.FIREFOX_ADDON} target="_blank">
+            <a className="float-right" href={this.FIREFOX_ADDON} target="_blank" rel="noopener noreferrer">
               Firefox &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a>
