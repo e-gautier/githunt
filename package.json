@@ -41,6 +41,7 @@
     ]
   },
   "scripts": {
+    "flow": "flow",
     "lint": "prettier --print-width 120 --single-quote --write src/**/*.{js,jsx,json,scss}",
     "precommit": "lint-staged",
     "start": "npm-run-all -p watch-css start-js",
@@ -59,5 +60,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "flow-bin": "^0.92.1"
+  }
 }
