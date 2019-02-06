@@ -19,7 +19,9 @@ const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddle
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={'loading from cache'} persistor={persistStore(store)}>
-      <App />
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
     </PersistGate>
   </Provider>,
   document.getElementById('root')
