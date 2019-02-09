@@ -27,7 +27,7 @@
 Then submit or pack (as zip) the build folder
 
 ## Deploy on Github pages
-`npm deploy`
+`npm run deploy`
 
 ## Contributors
 [@WaSa42 - https://github.com/WaSa42](https://github.com/WaSa42)
