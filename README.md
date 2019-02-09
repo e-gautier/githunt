@@ -1,6 +1,8 @@
-# Githunt
+<h1 align="center">Githunt</h1>
 
-Greetings traveler! Let's go hunting.
+<p align="center">
+    :boar: Greetings traveler! Let's go hunting.
+</p>
 
 ## Light mode
 
@@ -11,18 +13,21 @@ Greetings traveler! Let's go hunting.
 ![screenshot](src/assets/img/screenshot_Githunt_Dark.png)
 
 ## install (dev)
-`yarn`
+`npm i`
 
 ## run (dev)
-`yarn start`
+`npm start`
+
+## test
+`npm test`
 
 ## Deploy as an extension (prod)
-`yarn build`
+`npm build`
 
 Then submit or pack (as zip) the build folder
 
 ## Deploy on Github pages
-`yarn deploy`
+`npm deploy`
 
-## TODO
-- Readme preview
+Contributors
+[@WaSa42 - https://github.com/WaSa42](https://github.com/WaSa42)
