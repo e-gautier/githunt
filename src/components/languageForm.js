@@ -14,7 +14,7 @@ const LanguageForm = props => {
         className="form-control form-control-sm"
       />
       <div className="input-group-append">
-        <button type="submit" title="Valid" className="btn btn-sm btn-default" style={{ zIndex: 'unset' }}>
+        <button type="submit" title="Valid" className="btn btn-sm btn-light" style={{ zIndex: 'unset' }}>
           <FontAwesomeIcon icon={faCheck} />
         </button>
       </div>

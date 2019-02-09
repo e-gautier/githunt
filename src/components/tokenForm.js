@@ -48,7 +48,7 @@ const tokenForm = props => {
       case 'invalid':
         return 'btn-danger';
       default:
-        return props.submitSucceeded ? 'btn-success' : 'btn-default';
+        return props.submitSucceeded ? 'btn-success' : 'btn-light';
     }
   })(props.error);
 
