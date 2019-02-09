@@ -1,7 +1,7 @@
 <h1 align="center">Githunt</h1>
 
 <p align="center">
-    :boar: Greetings traveler! Let's go hunting.
+    Greetings traveler! Let's go hunting. :boar:
 </p>
 
 ## Light mode
