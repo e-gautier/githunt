@@ -4,11 +4,11 @@
     Greetings traveler! Let's go hunting. :boar:
 </p>
 
-## Light mode
+## By day
 
 ![screenshot](src/assets/img/screenshot_Githunt.png)
 
-## Dark mode
+## By night
 
 ![screenshot](src/assets/img/screenshot_Githunt_Dark.png)
 
