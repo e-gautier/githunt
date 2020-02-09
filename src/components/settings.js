@@ -4,11 +4,10 @@ import '../assets/scss/settings.css';
 import logo from '../assets/img/logo.png';
 import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBrush, faExternalLinkAlt, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBrush, faExternalLinkAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
-import { setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from '../actions/settings';
+import { setUsername, setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from '../actions/settings';
 import TokenForm from './tokenForm';
 
 class Settings extends Component {
@@ -46,7 +45,7 @@ class Settings extends Component {
           <div className="list-element">
             Please report any issue:
             <a className="float-right" target="_blank" rel="noopener noreferrer" href={this.GITHUNT_REPO}>
-              <button className="btn btn-sm">
+              <button className="btn btn-sm btn-light border border-dark">
                 <FontAwesomeIcon icon={faGithub} />
               </button>
             </a>
@@ -100,21 +99,17 @@ class Settings extends Component {
             </select>
           </div>
           <div className="list-element">
-            <FontAwesomeIcon data-tip data-for="tooltip-access-token" icon={faQuestionCircle} />
             &nbsp;Personal access token:
-            <ReactTooltip
-              id="tooltip-access-token"
-              place="right"
-              type={this.props.settings.theme.toLowerCase()}
-              effect="solid"
-            >
-              <span>
-                <strong>No scopes needed at all</strong>
-              </span>
-            </ReactTooltip>
+            <div className={`alert alert-${this.props.settings.theme.toLowerCase()} border border-dark py-2`}>
+              <FontAwesomeIcon icon={faInfoCircle} className="info-icon"/>
+              No scopes are needed.
+            </div>
             <TokenForm
-              onSubmit={form => this.props.setPersonalAccessToken(form.accessToken)}
-              initialValues={{ accessToken: this.props.settings.accessToken }}
+              onSubmit={form => {
+                this.props.setUsername(form.username);
+                this.props.setPersonalAccessToken(form.accessToken);
+              }}
+              initialValues={{ accessToken: this.props.settings.accessToken, username: this.props.settings.username }}
             />
           </div>
         </div>
@@ -130,6 +125,7 @@ Settings = connect(
   {
     setTheme,
     setRepoPoolSizeAndRefresh,
+    setUsername,
     setPersonalAccessToken
   }
 )(Settings);

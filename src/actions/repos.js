@@ -10,11 +10,11 @@ export const { throwError, tryAgain, setRepos, setToDate, requestRepos, receiveR
   'RECEIVE_REPOS'
 );
 
-export function fetchRepos(sort, language, repoAmount, since, to, accessToken = '') {
+export function fetchRepos(sort, language, repoAmount, since, to, username = '', accessToken = '') {
   return async dispatch => {
     dispatch(requestRepos());
     try {
-      const body = await github.fetchRepos(sort, language, repoAmount, since, to, accessToken);
+      const body = await github.fetchRepos(sort, language, repoAmount, since, to, username, accessToken);
       return dispatch(
         receiveRepos({
           items: body.items,

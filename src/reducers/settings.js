@@ -6,6 +6,7 @@ import {
   setPeriod,
   setLanguage,
   setReposPoolSize,
+  setUsername,
   setPersonalAccessToken
 } from '../actions/settings';
 import { handleActions } from 'redux-actions';
@@ -33,8 +34,10 @@ export default handleActions(
       return { ...state, repoAmount: action.payload };
     },
     [setPersonalAccessToken]: (state, action) => {
-      console.log(action.payload);
       return { ...state, accessToken: action.payload };
+    },
+    [setUsername]: (state, action) => {
+      return { ...state, username: action.payload };
     }
   },
   init
