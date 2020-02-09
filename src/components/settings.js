@@ -101,7 +101,7 @@ class Settings extends Component {
           <div className="list-element">
             &nbsp;Personal access token:
             <div className={`alert alert-${this.props.settings.theme.toLowerCase()} border border-dark py-2`}>
-              <FontAwesomeIcon icon={faInfoCircle} className="info-icon"/>
+              <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
               No scopes are needed.
             </div>
             <TokenForm

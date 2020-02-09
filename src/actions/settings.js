@@ -1,7 +1,14 @@
 import { setRepos } from './repos';
 import { createActions } from 'redux-actions';
 
-export const { setTheme, setPeriod, setLanguage, setReposPoolSize, setUsername, setPersonalAccessToken } = createActions(
+export const {
+  setTheme,
+  setPeriod,
+  setLanguage,
+  setReposPoolSize,
+  setUsername,
+  setPersonalAccessToken
+} = createActions(
   'SET_THEME',
   'SET_PERIOD',
   'SET_LANGUAGE',

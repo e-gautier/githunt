@@ -9,7 +9,7 @@ async function verifyAccessToken(form, props) {
     throw new SubmissionError({
       username: 'form-control-empty',
       _error: 'empty'
-    })
+    });
   }
   if (form.accessToken === '') {
     throw new SubmissionError({
