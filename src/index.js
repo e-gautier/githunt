@@ -14,7 +14,15 @@ const composeEnhancers = composeWithDevTools({
   trace: true
 });
 
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware, createLogger())));
+let middleware;
+
+if (process.env.NODE_ENV === 'development') {
+  middleware = [thunkMiddleware, createLogger()];
+} else {
+  middleware = [thunkMiddleware];
+}
+
+const store = createStore(reducers, composeEnhancers(applyMiddleware(...middleware)));
 
 ReactDOM.render(
   <Provider store={store}>
