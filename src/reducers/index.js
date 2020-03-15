@@ -8,7 +8,7 @@ import { reducer as formReducer } from 'redux-form';
 const reposPersistConfig = {
   key: 'repos',
   storage,
-  blacklist: ['error']
+  blacklist: ['error', 'fetching']
 };
 
 const settingsPersistConfig = {
