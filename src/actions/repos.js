@@ -17,7 +17,7 @@ export function fetchRepos(sort, language, repoAmount, since, to, username = '',
       const body = await github.fetchRepos(sort, language, repoAmount, since, to, username, accessToken);
       return dispatch(
         receiveRepos({
-          repos: body.items,
+          items: body.items,
           since: since.clone(),
           to: to.clone()
         })

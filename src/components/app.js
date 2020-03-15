@@ -64,7 +64,7 @@ class App extends Component {
           <Date since={repos.since} to={repos.to} />
         </div>
         <div className="row">
-          {repos.repos.map(repo => (
+          {repos.items.map(repo => (
             <Repo
               key={repo.id}
               fullName={repo.full_name}
