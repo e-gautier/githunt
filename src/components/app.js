@@ -5,7 +5,7 @@ import '../assets/scss/app.css';
 import Header from './header';
 import ErrorBoundary from './errorBoundary';
 import moment from 'moment';
-import Helmet from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt, faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
@@ -105,34 +105,36 @@ class App extends Component {
     };
 
     return (
-      <div className={this.props.settings.theme.toLowerCase()} id="theme-container">
-        <div className="App container">
-          <Helmet>
-            <meta charSet="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-            <meta name="theme-color" content="#000000" />
-            <link rel="manifest" href="manifest.json" />
-            <link rel="shortcut icon" href="favicon.ico" />
-            <title>{app.name}</title>
-          </Helmet>
-          <ErrorBoundary errorMessage={this.props.repos.error}>
-            <ScrollToTop showUnder={160} style={scrollToTopStyles}>
-              <FontAwesomeIcon icon={faArrowAltCircleUp} size={'3x'} />
-            </ScrollToTop>
-            <Header />
-            <div className="animated fadeIn">
-              <InfiniteScroll
-                pageStart={0}
-                loadMore={() => this.props.repos.error || this.props.repos.fetching || this.fetchRepos()}
-                hasMore={true}
-                loader={loader}
-              >
-                {rows}
-              </InfiniteScroll>
-            </div>
-          </ErrorBoundary>
+      <HelmetProvider>
+        <div className={this.props.settings.theme.toLowerCase()} id="theme-container">
+          <div className="App container">
+            <Helmet>
+              <meta charSet="utf-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+              <meta name="theme-color" content="#000000" />
+              <link rel="manifest" href="manifest.json" />
+              <link rel="shortcut icon" href="favicon.ico" />
+              <title>{app.name}</title>
+            </Helmet>
+            <ErrorBoundary errorMessage={this.props.repos.error}>
+              <ScrollToTop showUnder={160} style={scrollToTopStyles}>
+                <FontAwesomeIcon icon={faArrowAltCircleUp} size={'3x'} />
+              </ScrollToTop>
+              <Header />
+              <div className="animated fadeIn">
+                <InfiniteScroll
+                  pageStart={0}
+                  loadMore={() => this.props.repos.error || this.props.repos.fetching || this.fetchRepos()}
+                  hasMore={true}
+                  loader={loader}
+                >
+                  {rows}
+                </InfiniteScroll>
+              </div>
+            </ErrorBoundary>
+          </div>
         </div>
-      </div>
+      </HelmetProvider>
     );
   }
 }

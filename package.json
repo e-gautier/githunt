@@ -20,7 +20,7 @@
     "prettier": "^1.19.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-helmet": "^5.2.1",
+    "react-helmet-async": "^1.1.2",
     "react-infinite-scroller": "^1.2.1",
     "react-redux": "^6.0.1",
     "react-responsive-modal": "^3.6.0",
