@@ -8,10 +8,10 @@ import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/es/integration/react';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from '@redux-devtools/extension';
 
 const composeEnhancers = composeWithDevTools({
-  trace: true
+  trace: true,
 });
 
 let middleware;

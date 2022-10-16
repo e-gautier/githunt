@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Modal from 'react-responsive-modal';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
 import '../assets/scss/settings.css';
 import logo from '../assets/img/logo.png';
 import app from '../../package.json';
@@ -24,8 +25,8 @@ class Settings extends Component {
     const styles = {
       modal: {
         backgroundColor: this.props.settings.theme === THEME.DARK ? '#343a40' : '#fff',
-        color: this.props.settings.theme === THEME.DARK ? '#A5A5A5' : '#212529'
-      }
+        color: this.props.settings.theme === THEME.DARK ? '#A5A5A5' : '#212529',
+      },
     };
 
     return (
@@ -44,7 +45,7 @@ class Settings extends Component {
           </div>
           <div className="list-element">
             Please report any issue:
-            <a className="float-right" target="_blank" rel="noopener noreferrer" href={this.GITHUNT_REPO}>
+            <a className="float-end" target="_blank" rel="noopener noreferrer" href={this.GITHUNT_REPO}>
               <button className="btn btn-sm btn-light border border-dark">
                 <FontAwesomeIcon icon={faGithub} />
               </button>
@@ -52,36 +53,38 @@ class Settings extends Component {
           </div>
           <div className="list-element">
             Chrome web store:
-            <a className="float-right" href={this.CHROME_WEB_STORE} target="_blank" rel="noopener noreferrer">
+            <a className="float-end" href={this.CHROME_WEB_STORE} target="_blank" rel="noopener noreferrer">
               Chrome &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a>
           </div>
           <div className="list-element">
             Firefox addon:
-            <a className="float-right" href={this.FIREFOX_ADDON} target="_blank" rel="noopener noreferrer">
+            <a className="float-end" href={this.FIREFOX_ADDON} target="_blank" rel="noopener noreferrer">
               Firefox &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a>
           </div>
           <div className="list-element">
             Switch light/dark mode
-            <div className="float-right" style={{ display: 'flex' }}>
+            <div className="float-end" style={{ display: 'flex' }}>
               <div
-                className={`theme-selector theme-selector-light ${this.props.settings.theme === THEME.LIGHT &&
-                  'theme-selected'}`}
+                className={`theme-selector theme-selector-light ${
+                  this.props.settings.theme === THEME.LIGHT && 'theme-selected'
+                }`}
                 onClick={() => this.props.setTheme(THEME.LIGHT)}
               />
               <div
-                className={`theme-selector theme-selector-dark ${this.props.settings.theme === THEME.DARK &&
-                  'theme-selected'}`}
+                className={`theme-selector theme-selector-dark ${
+                  this.props.settings.theme === THEME.DARK && 'theme-selected'
+                }`}
                 onClick={() => this.props.setTheme(THEME.DARK)}
               />
             </div>
           </div>
           <div className="list-element">
             Invalid caches:
-            <button onClick={this.reset} className="btn btn-danger btn-sm float-right">
+            <button onClick={this.reset} className="btn btn-danger btn-sm float-end">
               <FontAwesomeIcon icon={faBrush} />
             </button>
           </div>
@@ -89,8 +92,8 @@ class Settings extends Component {
             Repos pool size:
             <select
               value={this.props.settings.repoAmount}
-              onChange={event => this.props.setRepoPoolSizeAndRefresh(event.target.value)}
-              className="form-control form-control-sm select-amount"
+              onChange={(event) => this.props.setRepoPoolSizeAndRefresh(event.target.value)}
+              className="form-select form-select-sm select-amount"
             >
               <option>3</option>
               <option>12</option>
@@ -105,7 +108,7 @@ class Settings extends Component {
               No scopes are needed.
             </div>
             <TokenForm
-              onSubmit={form => {
+              onSubmit={(form) => {
                 this.props.setUsername(form.username);
                 this.props.setPersonalAccessToken(form.accessToken);
               }}
@@ -119,14 +122,14 @@ class Settings extends Component {
 }
 
 Settings = connect(
-  state => {
+  (state) => {
     return state;
   },
   {
     setTheme,
     setRepoPoolSizeAndRefresh,
     setUsername,
-    setPersonalAccessToken
+    setPersonalAccessToken,
   }
 )(Settings);
 

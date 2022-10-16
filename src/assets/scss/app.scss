@@ -28,8 +28,19 @@ body,
     text-decoration: none;
   }
 
+  .form-select,
+  .form-control {
+    color: $dark-font-color;
+  }
+
   .form-control,
   .form-control:focus {
+    background-color: $dark-background-color;
+    border-color: $dark-card-color;
+  }
+
+  .form-select,
+  .form-select:focus {
     background-color: $dark-background-color;
     border-color: $dark-card-color;
   }
