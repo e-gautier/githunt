@@ -15,19 +15,19 @@ class Header extends Component {
     super(props);
 
     this.state = {
-      settingsOpened: false
+      settingsOpened: false,
     };
   }
 
   openSettings = () => {
     this.setState({
-      settingsOpened: true
+      settingsOpened: true,
     });
   };
 
   closeSettings = () => {
     this.setState({
-      settingsOpened: false
+      settingsOpened: false,
     });
   };
 
@@ -43,7 +43,7 @@ class Header extends Component {
       <div>
         <Settings settingsOpened={this.state.settingsOpened} closeSettings={this.closeSettings} />
         <div className="row">
-          <div className="col-12 my-1 col-lg-4 mx-lg-0">
+          <div className="col-12 my-1 col-lg-4">
             <div className="d-flex justify-content-center">
               <img src={logo} className="logo-main" alt="logo" />
               <h1>{app.name}</h1>
@@ -51,12 +51,12 @@ class Header extends Component {
             <p className="text-center">Hunting the best GitHub projects</p>
           </div>
           <div className="col-lg-2" />
-          <div className="col-12 col-lg-6 text-center row ml-1">
-            <div className="col-12 p-1 col-lg-4 p-lg-3 mt-lg-3">
+          <div className="col-12 col-lg-6 text-center row">
+            <div className="col-12 p-1 col-lg-4 d-flex justify-content-evenly align-items-center">
               <select
                 value={this.props.settings.period}
-                onChange={event => this.props.setPeriodAndRefresh(event.target.value)}
-                className="form-control form-control-sm"
+                onChange={(event) => this.props.setPeriodAndRefresh(event.target.value)}
+                className="form-select form-select-sm"
               >
                 <option value={PERIOD.DAILY}>Daily</option>
                 <option value={PERIOD.WEEKLY}>Weekly</option>
@@ -64,15 +64,15 @@ class Header extends Component {
                 <option value={PERIOD.YEARLY}>Yearly</option>
               </select>
             </div>
-            <div className="col-12 p-1 col-lg-5 p-lg-3 mt-lg-3">
+            <div className="col-12 p-1 col-lg-5 d-flex justify-content-evenly align-items-center">
               <LanguageForm
-                onSubmit={form => this.props.setLanguageAndRefresh(form.language)}
+                onSubmit={(form) => this.props.setLanguageAndRefresh(form.language)}
                 initialValues={{ language: this.props.settings.language }}
               />
             </div>
-            <div className="col-12 p-1 col-lg-3 p-lg-3 mt-lg-3">
+            <div className="col-12 p-1 col-lg-3 d-flex justify-content-evenly align-items-center">
               {refreshIcon}
-              <FontAwesomeIcon onClick={this.openSettings} icon={faInfoCircle} size="lg" className="icon ml-4" />
+              <FontAwesomeIcon onClick={this.openSettings} icon={faInfoCircle} size="lg" className="icon" />
             </div>
           </div>
         </div>
@@ -82,13 +82,13 @@ class Header extends Component {
 }
 
 Header = connect(
-  state => {
+  (state) => {
     return state;
   },
   {
     setRepos,
     setLanguageAndRefresh,
-    setPeriodAndRefresh
+    setPeriodAndRefresh,
   }
 )(Header);
 
