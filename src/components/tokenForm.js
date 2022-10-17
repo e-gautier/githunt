@@ -1,110 +1,71 @@
 import React from 'react';
-import { reduxForm, Field, SubmissionError } from 'redux-form';
+import { Form, Field } from 'react-final-form';
+import { FORM_ERROR } from 'final-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCheck } from '@fortawesome/free-solid-svg-icons';
 import * as github from '../middlewares/github';
 
-async function verifyAccessToken(form, props) {
-  if (form.username === '') {
-    throw new SubmissionError({
-      username: 'form-control-empty',
-      _error: 'empty'
-    });
-  }
-  if (form.accessToken === '') {
-    throw new SubmissionError({
-      accessToken: 'form-control-empty',
-      _error: 'empty'
-    });
-  }
+async function verifyAccessToken(values, callback) {
   try {
-    await github.isAccessTokenValid(form.username, form.accessToken);
+    await github.isAccessTokenValid(values.username, values.accessToken);
   } catch (error) {
-    throw new SubmissionError({
-      accessToken: 'form-control-invalid',
-      username: 'form-control-invalid',
-      _error: 'invalid'
-    });
+    return { username: 'invalid', accessToken: 'invalid', [FORM_ERROR]: 'invalid' };
   }
-
-  return props.onSubmit(form);
+  return callback(values);
 }
 
-const usernameInput = props => {
-  let className = props.meta.error;
-  if (!props.meta.error && props.submitSucceeded) {
-    className = 'form-control-valid';
-  }
-
-  return (
-    <input
-      {...props.input}
-      className={`form-control form-control-sm ${className}`}
-      type={props.type}
-      name="username"
-      placeholder={props.label}
-    />
-  );
-};
-
-const tokenInput = props => {
-  let className = props.meta.error;
-  if (!props.meta.error && props.submitSucceeded) {
-    className = 'form-control-valid';
-  }
-
-  return (
-    <input
-      {...props.input}
-      className={`form-control form-control-sm ${className}`}
-      type={props.type}
-      name="accessToken"
-      placeholder={props.label}
-    />
-  );
-};
-
-const tokenForm = props => {
-  const error = (error => {
-    switch (error) {
-      case 'empty':
-        return 'btn-warning';
-      case 'invalid':
-        return 'btn-danger';
-      default:
-        return props.submitSucceeded ? 'btn-success' : 'btn-light';
+const tokenForm = (props) => {
+  const error = (submitError, submitSucceeded) => {
+    if (submitError) {
+      return 'btn-danger';
     }
-  })(props.error);
+    return submitSucceeded ? 'btn-success' : 'btn-light';
+  };
 
   return (
-    <form
-      className="input-group personal-access-token-input"
-      onSubmit={props.handleSubmit(form => verifyAccessToken(form, props))}
-    >
-      <Field
-        type="text"
-        name="username"
-        component={usernameInput}
-        label="username"
-        submitSucceeded={props.submitSucceeded}
-      />
-      <Field
-        type="password"
-        name="accessToken"
-        component={tokenInput}
-        label="token"
-        submitSucceeded={props.submitSucceeded}
-      />
-      <div className="input-group-append">
-        <button type="submit" className={`btn btn-sm border border-dark ${error}`}>
-          <FontAwesomeIcon icon={faUserCheck} />
-          &nbsp;Verify
-        </button>
-      </div>
-    </form>
+    <Form onSubmit={(values) => verifyAccessToken(values, props.onSubmit)} initialValues={props.initialValues}>
+      {({ handleSubmit, submitSucceeded, submitErrors, submitting }) => (
+        <form className="input-group personal-access-token-input" onSubmit={handleSubmit}>
+          <Field type="text" name="username">
+            {({ input }) => (
+              <input
+                {...input}
+                className={`form-control form-control-sm ${submitSucceeded && 'is-valid'} ${
+                  submitErrors && submitErrors.username && `is-${submitErrors.username}`
+                }`}
+                type={input.type}
+                name={input.name}
+                placeholder="username"
+              />
+            )}
+          </Field>
+          <Field type="password" name="accessToken">
+            {({ input }) => (
+              <input
+                {...input}
+                className={`form-control form-control-sm ${submitSucceeded && 'is-valid'} ${
+                  submitErrors && submitErrors.accessToken && `is-${submitErrors.accessToken}`
+                }`}
+                type={input.type}
+                name={input.name}
+                placeholder="token"
+              />
+            )}
+          </Field>
+          <div className="input-group-append">
+            <button
+              type="submit"
+              className={`btn btn-sm border border-dark ${error(submitErrors, submitSucceeded)}`}
+              disabled={submitting}
+            >
+              <FontAwesomeIcon icon={faUserCheck} />
+              &nbsp;Verify
+            </button>
+          </div>
+        </form>
+      )}
+    </Form>
   );
 };
 
-export default reduxForm({
-  form: 'tokenForm'
-})(tokenForm);
+export default tokenForm;
