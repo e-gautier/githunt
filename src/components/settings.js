@@ -108,9 +108,9 @@ class Settings extends Component {
               No scopes are needed.
             </div>
             <TokenForm
-              onSubmit={(form) => {
-                this.props.setUsername(form.username);
-                this.props.setPersonalAccessToken(form.accessToken);
+              onSubmit={(values) => {
+                this.props.setUsername(values.username);
+                this.props.setPersonalAccessToken(values.accessToken);
               }}
               initialValues={{ accessToken: this.props.settings.accessToken, username: this.props.settings.username }}
             />

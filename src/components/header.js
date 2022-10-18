@@ -66,7 +66,7 @@ class Header extends Component {
             </div>
             <div className="col-12 p-1 col-lg-5 d-flex justify-content-evenly align-items-center">
               <LanguageForm
-                onSubmit={(form) => this.props.setLanguageAndRefresh(form.language)}
+                onSubmit={(values) => this.props.setLanguageAndRefresh(values.language)}
                 initialValues={{ language: this.props.settings.language }}
               />
             </div>
