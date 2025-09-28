@@ -22,7 +22,7 @@
 `npm test`
 
 ## Deploy as an extension (prod)
-`npm build`
+`npm run build`
 
 Then submit or pack (as zip) the build folder
 
