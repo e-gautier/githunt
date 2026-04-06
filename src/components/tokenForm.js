@@ -60,6 +60,7 @@ class TokenForm extends Component {
         return;
       }
       this.setState({ status: STATUS.INVALID });
+      this.props.onVerified('');
     }
   }
 
