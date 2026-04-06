@@ -46,7 +46,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "build-css": "sass src/:src/",
-    "watch-css": "npm run build-css && sass src/:src/ --watch"
+    "watch-css": "npm run build-css && sass src/:src/ --watch",
+    "package": "npm run build && cd build && zip -r ../githunt-$npm_package_version.zip ."
   },
   "browserslist": [
     ">0.2%",

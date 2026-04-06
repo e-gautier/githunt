@@ -13,21 +13,33 @@
 ![screenshot](src/assets/img/screenshot_Githunt_Dark.png)
 
 ## install (dev)
+
 `npm i`
 
 ## run (dev)
+
 `npm start`
 
 ## test
+
 `npm test`
 
 ## Deploy as an extension (prod)
+
 `npm run build`
 
-Then submit or pack (as zip) the build folder
+Then submit or pack (as zip) the build folder.
+
+Or use the package command to build and zip in one step:
+
+`npm run package`
+
+This creates a `githunt-<version>.zip` ready to be submitted to the Chrome Web Store or Firefox Add-ons.
 
 ## Deploy on Github pages
+
 `npm run deploy`
 
 ## Contributors
+
 [@WaSa42 - https://github.com/WaSa42](https://github.com/WaSa42)
