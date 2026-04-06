@@ -18,6 +18,7 @@ class TokenForm extends Component {
       status: props.initialValue ? STATUS.VALID : STATUS.IDLE,
     };
     this.debounceTimer = null;
+    this.abortController = null;
   }
 
   handleChange = (e) => {
@@ -26,6 +27,11 @@ class TokenForm extends Component {
 
     if (this.debounceTimer) {
       clearTimeout(this.debounceTimer);
+    }
+
+    if (this.abortController) {
+      this.abortController.abort();
+      this.abortController = null;
     }
 
     if (!value) {
@@ -37,12 +43,22 @@ class TokenForm extends Component {
   };
 
   async verify(token) {
+    if (this.abortController) {
+      this.abortController.abort();
+    }
+    this.abortController = new AbortController();
+
     this.setState({ status: STATUS.VERIFYING });
     try {
-      await github.isAccessTokenValid(token);
+      await github.isAccessTokenValid(token, {
+        signal: this.abortController.signal,
+      });
       this.setState({ status: STATUS.VALID });
       this.props.onVerified(token);
     } catch (error) {
+      if (error.name === 'AbortError') {
+        return;
+      }
       this.setState({ status: STATUS.INVALID });
     }
   }
@@ -50,6 +66,9 @@ class TokenForm extends Component {
   componentWillUnmount() {
     if (this.debounceTimer) {
       clearTimeout(this.debounceTimer);
+    }
+    if (this.abortController) {
+      this.abortController.abort();
     }
   }
 

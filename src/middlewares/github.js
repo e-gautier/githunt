@@ -47,9 +47,9 @@ export async function fetchRepos(sort, language, repoAmount, since, to, accessTo
  * @param {string} token
  * @returns {Promise<any>}
  */
-export async function isAccessTokenValid(token) {
+export async function isAccessTokenValid(token, { signal } = {}) {
   const headers = buildHeaders(token);
-  const response = await fetch(`${GITHUB_API}`, { headers });
+  const response = await fetch(`${GITHUB_API}`, { headers, signal });
   if (!response.ok) {
     throw Error(response.statusText);
   }

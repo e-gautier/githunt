@@ -12,7 +12,7 @@ const init = {
 export default handleActions(
   {
     [throwError]: (state, action) => {
-      return { ...state, error: action.payload };
+      return { ...state, error: action.payload, fetching: false };
     },
     [tryAgain]: (state) => {
       return { ...state, fetching: false, error: null };
