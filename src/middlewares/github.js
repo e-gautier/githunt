@@ -1,6 +1,18 @@
-import { Buffer } from 'buffer';
-
 export const GITHUB_API = 'https://api.github.com';
+
+/**
+ * Build request headers, optionally with Bearer token auth.
+ *
+ * @param {string} accessToken
+ * @returns {Headers}
+ */
+function buildHeaders(accessToken) {
+  const headers = new Headers();
+  if (accessToken) {
+    headers.set('Authorization', `Bearer ${accessToken}`);
+  }
+  return headers;
+}
 
 /**
  * Fetch repos from Github according to a few parameters.
@@ -10,14 +22,11 @@ export const GITHUB_API = 'https://api.github.com';
  * @param repoAmount
  * @param since
  * @param to
- * @param username
  * @param accessToken
  * @returns {Promise<any>}
  */
-export async function fetchRepos(sort, language, repoAmount, since, to, username = '', accessToken = '') {
-  let headers = new Headers({
-    Authorization: `Basic ${Buffer.from(`${username}:${accessToken}`).toString('base64')}`,
-  });
+export async function fetchRepos(sort, language, repoAmount, since, to, accessToken = '') {
+  const headers = buildHeaders(accessToken);
   const languageQuery = language ? ` language:${language}` : '';
   const response = await fetch(
     `${GITHUB_API}/search/repositories?sort=${sort}&q=created:${since.format('YYYY-MM-DD')}..${
@@ -35,14 +44,11 @@ export async function fetchRepos(sort, language, repoAmount, since, to, username
 /**
  * Test on Github if the provided token is valid.
  *
- * @param username
- * @param token
+ * @param {string} token
  * @returns {Promise<any>}
  */
-export async function isAccessTokenValid(username, token) {
-  let headers = new Headers({
-    Authorization: `Basic ${Buffer.from(`${username}:${token}`).toString('base64')}`,
-  });
+export async function isAccessTokenValid(token) {
+  const headers = buildHeaders(token);
   const response = await fetch(`${GITHUB_API}`, { headers });
   if (!response.ok) {
     throw Error(response.statusText);

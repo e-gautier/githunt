@@ -52,7 +52,6 @@ class App extends Component {
       this.props.settings.repoAmount,
       since,
       to,
-      this.props.settings.username,
       this.props.settings.accessToken
     );
   };

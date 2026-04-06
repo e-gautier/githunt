@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrush, faExternalLinkAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { connect } from 'react-redux';
-import { setUsername, setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from '../actions/settings';
+import { setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from '../actions/settings';
 import TokenForm from './tokenForm';
 
 class Settings extends Component {
@@ -109,10 +109,9 @@ class Settings extends Component {
             </div>
             <TokenForm
               onSubmit={(values) => {
-                this.props.setUsername(values.username);
                 this.props.setPersonalAccessToken(values.accessToken);
               }}
-              initialValues={{ accessToken: this.props.settings.accessToken, username: this.props.settings.username }}
+              initialValues={{ accessToken: this.props.settings.accessToken }}
             />
           </div>
         </div>
@@ -128,7 +127,6 @@ Settings = connect(
   {
     setTheme,
     setRepoPoolSizeAndRefresh,
-    setUsername,
     setPersonalAccessToken,
   }
 )(Settings);

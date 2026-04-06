@@ -7,9 +7,9 @@ import * as github from '../middlewares/github';
 
 async function verifyAccessToken(values, callback) {
   try {
-    await github.isAccessTokenValid(values.username, values.accessToken);
+    await github.isAccessTokenValid(values.accessToken);
   } catch (error) {
-    return { username: 'invalid', accessToken: 'invalid', [FORM_ERROR]: 'invalid' };
+    return { accessToken: 'invalid', [FORM_ERROR]: 'invalid' };
   }
   return callback(values);
 }
@@ -26,19 +26,6 @@ const tokenForm = (props) => {
     <Form onSubmit={(values) => verifyAccessToken(values, props.onSubmit)} initialValues={props.initialValues}>
       {({ handleSubmit, submitSucceeded, submitErrors, submitting }) => (
         <form className="input-group personal-access-token-input" onSubmit={handleSubmit}>
-          <Field type="text" name="username">
-            {({ input }) => (
-              <input
-                {...input}
-                className={`form-control form-control-sm ${submitSucceeded && 'is-valid'} ${
-                  submitErrors && submitErrors.username && `is-${submitErrors.username}`
-                }`}
-                type={input.type}
-                name={input.name}
-                placeholder="username"
-              />
-            )}
-          </Field>
           <Field type="password" name="accessToken">
             {({ input }) => (
               <input
@@ -48,7 +35,7 @@ const tokenForm = (props) => {
                 }`}
                 type={input.type}
                 name={input.name}
-                placeholder="token"
+                placeholder="personal access token"
               />
             )}
           </Field>
