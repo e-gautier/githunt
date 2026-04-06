@@ -10,16 +10,16 @@ export const { throwError, tryAgain, setRepos, setToDate, requestRepos, receiveR
   'RECEIVE_REPOS'
 );
 
-export function fetchRepos(sort, language, repoAmount, since, to, username = '', accessToken = '') {
-  return async dispatch => {
+export function fetchRepos(sort, language, repoAmount, since, to, accessToken = '') {
+  return async (dispatch) => {
     dispatch(requestRepos());
     try {
-      const body = await github.fetchRepos(sort, language, repoAmount, since, to, username, accessToken);
+      const body = await github.fetchRepos(sort, language, repoAmount, since, to, accessToken);
       return dispatch(
         receiveRepos({
           items: body.items,
           since: since.clone(),
-          to: to.clone()
+          to: to.clone(),
         })
       );
     } catch (error) {

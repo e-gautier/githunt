@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrush, faExternalLinkAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { connect } from 'react-redux';
-import { setUsername, setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from '../actions/settings';
+import { setPersonalAccessToken, setRepoPoolSizeAndRefresh, setTheme, THEME } from '../actions/settings';
 import TokenForm from './tokenForm';
 
 class Settings extends Component {
@@ -104,15 +104,22 @@ class Settings extends Component {
           <div className="list-element">
             &nbsp;Personal access token:
             <div className={`alert alert-${this.props.settings.theme.toLowerCase()} border border-dark py-2`}>
-              <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
+              <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />{' '}
+              <a
+                href="https://github.com/settings/tokens/new?description=GitHunt&scopes="
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Create one here &nbsp;
+                <FontAwesomeIcon icon={faExternalLinkAlt} />
+              </a>
+              , then paste it below.
+              <br />
               No scopes are needed.
             </div>
             <TokenForm
-              onSubmit={(values) => {
-                this.props.setUsername(values.username);
-                this.props.setPersonalAccessToken(values.accessToken);
-              }}
-              initialValues={{ accessToken: this.props.settings.accessToken, username: this.props.settings.username }}
+              onVerified={(token) => this.props.setPersonalAccessToken(token)}
+              initialValue={this.props.settings.accessToken}
             />
           </div>
         </div>
@@ -122,13 +129,12 @@ class Settings extends Component {
 }
 
 Settings = connect(
-  (state) => {
-    return state;
-  },
+  (state) => ({
+    settings: state.settings,
+  }),
   {
     setTheme,
     setRepoPoolSizeAndRefresh,
-    setUsername,
     setPersonalAccessToken,
   }
 )(Settings);

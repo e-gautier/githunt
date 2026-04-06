@@ -8,9 +8,9 @@ import classNames from 'classnames';
 
 class Repo extends Component {
   render() {
-    const theme = this.props.settings.theme.toLowerCase();
+    const theme = this.props.theme.toLowerCase();
     const badgeClass = classNames('badge', {
-      'text-dark': theme == THEME.LIGHT.toLowerCase(),
+      'text-dark': theme === THEME.LIGHT.toLowerCase(),
     });
     const license = this.props.license ? (
       <div className={badgeClass} title="license">
@@ -57,8 +57,8 @@ class Repo extends Component {
   }
 }
 
-Repo = connect((state) => {
-  return state;
-})(Repo);
+Repo = connect((state) => ({
+  theme: state.settings.theme,
+}))(Repo);
 
 export default Repo;

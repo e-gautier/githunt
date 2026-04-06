@@ -1,12 +1,15 @@
 import React from 'react';
 import '../assets/scss/date.css';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-export default props => {
+dayjs.extend(relativeTime);
+
+export default (props) => {
   return (
     <div className="date">
-      {moment(props.since).fromNow()} - {moment(props.since).format('MMM DD, YYYY')} –{' '}
-      {moment(props.to).format('MMM DD, YYYY')}
+      {dayjs(props.since).fromNow()} - {dayjs(props.since).format('MMM DD, YYYY')} –{' '}
+      {dayjs(props.to).format('MMM DD, YYYY')}
     </div>
   );
 };

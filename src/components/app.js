@@ -4,7 +4,7 @@ import '../../node_modules/animate.css/animate.min.css';
 import '../assets/scss/app.css';
 import Header from './header';
 import ErrorBoundary from './errorBoundary';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,28 +21,28 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    if (moment(props.repos.cacheDate).diff(moment(), 'hours') < -12) {
+    if (dayjs(props.repos.cacheDate).diff(dayjs(), 'hour') < -12) {
       props.setRepos([]);
-      props.setToDate(moment());
+      props.setToDate(dayjs());
     }
   }
 
   fetchRepos = () => {
     const lastRepo = this.props.repos.repos[this.props.repos.repos.length - 1];
-    const to = lastRepo ? moment(lastRepo.since) : moment();
+    const to = lastRepo ? dayjs(lastRepo.since) : dayjs();
 
-    const since = (period => {
+    const since = ((period) => {
       switch (period) {
         case PERIOD.DAILY:
-          return to.clone().subtract(1, 'days');
+          return to.subtract(1, 'day');
         case PERIOD.WEEKLY:
-          return to.clone().subtract(1, 'weeks');
+          return to.subtract(1, 'week');
         case PERIOD.MONTHLY:
-          return to.clone().subtract(1, 'months');
+          return to.subtract(1, 'month');
         case PERIOD.YEARLY:
-          return to.clone().subtract(1, 'years');
+          return to.subtract(1, 'year');
         default:
-          return moment();
+          return dayjs();
       }
     })(this.props.settings.period);
 
@@ -52,7 +52,6 @@ class App extends Component {
       this.props.settings.repoAmount,
       since,
       to,
-      this.props.settings.username,
       this.props.settings.accessToken
     );
   };
@@ -64,7 +63,7 @@ class App extends Component {
           <Date since={repos.since} to={repos.to} />
         </div>
         <div className="row">
-          {repos.items.map(repo => (
+          {repos.items.map((repo) => (
             <Repo
               key={repo.id}
               fullName={repo.full_name}
@@ -82,14 +81,19 @@ class App extends Component {
       </div>
     ));
 
-    const loader = (
+    const error = this.props.repos.error;
+
+    const loader = error ? (
+      <div className="loader-small" key={0}>
+        <span>{error}</span>
+        <br />
+        <button onClick={() => this.props.tryAgain()}>try again</button>
+      </div>
+    ) : (
       <div className="loader-small" key={0}>
         <FontAwesomeIcon icon={faSyncAlt} spin />
         &nbsp;
         <strong>Wait, hunting them down...</strong>
-        <br />
-        <span>{this.props.repos.error}</span>
-        <span>{this.props.repos.error && <button onClick={() => this.props.tryAgain()}>try again</button>}</span>
       </div>
     );
 
@@ -101,7 +105,7 @@ class App extends Component {
       transitionDuration: '0.2s',
       transitionTimingFunction: 'linear',
       transitionDelay: '0s',
-      zIndex: 1
+      zIndex: 1,
     };
 
     return (
@@ -124,8 +128,8 @@ class App extends Component {
               <div className="animated fadeIn">
                 <InfiniteScroll
                   pageStart={0}
-                  loadMore={() => this.props.repos.error || this.props.repos.fetching || this.fetchRepos()}
-                  hasMore={true}
+                  loadMore={() => this.props.repos.fetching || this.fetchRepos()}
+                  hasMore={!error}
                   loader={loader}
                 >
                   {rows}
@@ -140,14 +144,15 @@ class App extends Component {
 }
 
 App = connect(
-  state => {
-    return state;
-  },
+  (state) => ({
+    repos: state.repos,
+    settings: state.settings,
+  }),
   {
     tryAgain,
     fetchRepos,
     setRepos,
-    setToDate
+    setToDate,
   }
 )(App);
 

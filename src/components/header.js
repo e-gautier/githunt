@@ -66,8 +66,8 @@ class Header extends Component {
             </div>
             <div className="col-12 p-1 col-lg-5 d-flex justify-content-evenly align-items-center">
               <LanguageForm
-                onSubmit={(values) => this.props.setLanguageAndRefresh(values.language)}
-                initialValues={{ language: this.props.settings.language }}
+                value={this.props.settings.language}
+                onChange={(language) => this.props.setLanguageAndRefresh(language)}
               />
             </div>
             <div className="col-12 p-1 col-lg-3 d-flex justify-content-evenly align-items-center">
@@ -82,9 +82,10 @@ class Header extends Component {
 }
 
 Header = connect(
-  (state) => {
-    return state;
-  },
+  (state) => ({
+    repos: state.repos,
+    settings: state.settings,
+  }),
   {
     setRepos,
     setLanguageAndRefresh,

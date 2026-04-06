@@ -13,6 +13,7 @@ const reposPersistConfig = {
 const settingsPersistConfig = {
   key: 'settings',
   storage,
+  blacklist: ['accessToken'],
 };
 
 export default combineReducers({
