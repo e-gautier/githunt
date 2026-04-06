@@ -104,14 +104,22 @@ class Settings extends Component {
           <div className="list-element">
             &nbsp;Personal access token:
             <div className={`alert alert-${this.props.settings.theme.toLowerCase()} border border-dark py-2`}>
-              <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
+              <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />{' '}
+              <a
+                href="https://github.com/settings/tokens/new?description=GitHunt&scopes="
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Create one here &nbsp;
+                <FontAwesomeIcon icon={faExternalLinkAlt} />
+              </a>
+              , then paste it below.
+              <br />
               No scopes are needed.
             </div>
             <TokenForm
-              onSubmit={(values) => {
-                this.props.setPersonalAccessToken(values.accessToken);
-              }}
-              initialValues={{ accessToken: this.props.settings.accessToken }}
+              onVerified={(token) => this.props.setPersonalAccessToken(token)}
+              initialValue={this.props.settings.accessToken}
             />
           </div>
         </div>

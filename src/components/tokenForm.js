@@ -1,58 +1,89 @@
-import React from 'react';
-import { Form, Field } from 'react-final-form';
-import { FORM_ERROR } from 'final-form';
+import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCheck } from '@fortawesome/free-solid-svg-icons';
+import { faSyncAlt, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as github from '../middlewares/github';
 
-async function verifyAccessToken(values, callback) {
-  try {
-    await github.isAccessTokenValid(values.accessToken);
-  } catch (error) {
-    return { accessToken: 'invalid', [FORM_ERROR]: 'invalid' };
-  }
-  return callback(values);
-}
-
-const tokenForm = (props) => {
-  const error = (submitError, submitSucceeded) => {
-    if (submitError) {
-      return 'btn-danger';
-    }
-    return submitSucceeded ? 'btn-success' : 'btn-light';
-  };
-
-  return (
-    <Form onSubmit={(values) => verifyAccessToken(values, props.onSubmit)} initialValues={props.initialValues}>
-      {({ handleSubmit, submitSucceeded, submitErrors, submitting }) => (
-        <form className="input-group personal-access-token-input" onSubmit={handleSubmit}>
-          <Field type="password" name="accessToken">
-            {({ input }) => (
-              <input
-                {...input}
-                className={`form-control form-control-sm ${submitSucceeded && 'is-valid'} ${
-                  submitErrors && submitErrors.accessToken && `is-${submitErrors.accessToken}`
-                }`}
-                type={input.type}
-                name={input.name}
-                placeholder="personal access token"
-              />
-            )}
-          </Field>
-          <div className="input-group-append">
-            <button
-              type="submit"
-              className={`btn btn-sm border border-dark ${error(submitErrors, submitSucceeded)}`}
-              disabled={submitting}
-            >
-              <FontAwesomeIcon icon={faUserCheck} />
-              &nbsp;Verify
-            </button>
-          </div>
-        </form>
-      )}
-    </Form>
-  );
+const STATUS = {
+  IDLE: 'IDLE',
+  VERIFYING: 'VERIFYING',
+  VALID: 'VALID',
+  INVALID: 'INVALID',
 };
 
-export default tokenForm;
+class TokenForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.initialValue || '',
+      status: props.initialValue ? STATUS.VALID : STATUS.IDLE,
+    };
+    this.debounceTimer = null;
+  }
+
+  handleChange = (e) => {
+    const value = e.target.value;
+    this.setState({ value, status: STATUS.IDLE });
+
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+    }
+
+    if (!value) {
+      this.props.onVerified('');
+      return;
+    }
+
+    this.debounceTimer = setTimeout(() => this.verify(value), 500);
+  };
+
+  async verify(token) {
+    this.setState({ status: STATUS.VERIFYING });
+    try {
+      await github.isAccessTokenValid(token);
+      this.setState({ status: STATUS.VALID });
+      this.props.onVerified(token);
+    } catch (error) {
+      this.setState({ status: STATUS.INVALID });
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+    }
+  }
+
+  render() {
+    const { status, value } = this.state;
+
+    const statusClass = status === STATUS.VALID ? 'is-valid' : status === STATUS.INVALID ? 'is-invalid' : '';
+
+    const statusIcon =
+      status === STATUS.VERIFYING ? (
+        <FontAwesomeIcon icon={faSyncAlt} spin />
+      ) : status === STATUS.VALID ? (
+        <FontAwesomeIcon icon={faCheck} className="text-success" />
+      ) : status === STATUS.INVALID ? (
+        <FontAwesomeIcon icon={faTimes} className="text-danger" />
+      ) : null;
+
+    return (
+      <div className="input-group personal-access-token-input">
+        <input
+          className={`form-control form-control-sm ${statusClass}`}
+          type="password"
+          placeholder="paste your token here"
+          value={value}
+          onChange={this.handleChange}
+        />
+        {statusIcon && (
+          <span className="input-group-text" style={{ minWidth: '2.5rem', justifyContent: 'center' }}>
+            {statusIcon}
+          </span>
+        )}
+      </div>
+    );
+  }
+}
+
+export default TokenForm;
