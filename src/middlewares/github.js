@@ -28,12 +28,12 @@ function buildHeaders(accessToken) {
 export async function fetchRepos(sort, language, repoAmount, since, to, accessToken = '') {
   const headers = buildHeaders(accessToken);
   const languageQuery = language ? ` language:${language}` : '';
-  const response = await fetch(
-    `${GITHUB_API}/search/repositories?sort=${sort}&q=created:${since.format('YYYY-MM-DD')}..${
-      to ? to.format('YYYY-MM-DD') : '*'
-    }${languageQuery}&per_page=${repoAmount}`,
-    { headers }
-  );
+  const dateRange = `${since.format('YYYY-MM-DD')}..${to ? to.format('YYYY-MM-DD') : '*'}`;
+  const url = new URL(`${GITHUB_API}/search/repositories`);
+  url.searchParams.set('sort', sort);
+  url.searchParams.set('q', `created:${dateRange}${languageQuery}`);
+  url.searchParams.set('per_page', repoAmount);
+  const response = await fetch(url, { headers });
   if (!response.ok) {
     const body = await response.json();
     throw Error(body.message);

@@ -1,28 +1,49 @@
 import React from 'react';
-import { Form, Field } from 'react-final-form';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
-const LanguageForm = (props) => {
+const LANGUAGES = [
+  '',
+  'JavaScript',
+  'TypeScript',
+  'Python',
+  'Java',
+  'C#',
+  'C++',
+  'C',
+  'Go',
+  'Rust',
+  'PHP',
+  'Ruby',
+  'Swift',
+  'Kotlin',
+  'Dart',
+  'Scala',
+  'Shell',
+  'Lua',
+  'R',
+  'Perl',
+  'Haskell',
+  'Elixir',
+  'Clojure',
+  'Erlang',
+  'Julia',
+  'Zig',
+  'Objective-C',
+  'HTML',
+  'CSS',
+  'SCSS',
+  'Vue',
+  'Svelte',
+];
+
+const LanguageForm = ({ value, onChange }) => {
   return (
-    <Form onSubmit={props.onSubmit} initialValues={props.initialValues}>
-      {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit} className="input-group">
-          <Field
-            component="input"
-            name="language"
-            type="text"
-            placeholder="All languages"
-            className="form-control form-control-sm"
-          />
-          <div className="input-group-append">
-            <button type="submit" title="Valid" className="btn btn-sm btn-light" style={{ zIndex: 'unset' }}>
-              <FontAwesomeIcon icon={faCheck} />
-            </button>
-          </div>
-        </form>
-      )}
-    </Form>
+    <select value={value} onChange={(event) => onChange(event.target.value)} className="form-select form-select-sm">
+      {LANGUAGES.map((lang) => (
+        <option key={lang} value={lang}>
+          {lang || 'All languages'}
+        </option>
+      ))}
+    </select>
   );
 };
 
