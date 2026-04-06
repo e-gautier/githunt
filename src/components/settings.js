@@ -129,9 +129,9 @@ class Settings extends Component {
 }
 
 Settings = connect(
-  (state) => {
-    return state;
-  },
+  (state) => ({
+    settings: state.settings,
+  }),
   {
     setTheme,
     setRepoPoolSizeAndRefresh,

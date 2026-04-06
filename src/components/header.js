@@ -82,9 +82,10 @@ class Header extends Component {
 }
 
 Header = connect(
-  (state) => {
-    return state;
-  },
+  (state) => ({
+    repos: state.repos,
+    settings: state.settings,
+  }),
   {
     setRepos,
     setLanguageAndRefresh,

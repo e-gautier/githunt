@@ -144,9 +144,10 @@ class App extends Component {
 }
 
 App = connect(
-  (state) => {
-    return state;
-  },
+  (state) => ({
+    repos: state.repos,
+    settings: state.settings,
+  }),
   {
     tryAgain,
     fetchRepos,

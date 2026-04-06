@@ -57,8 +57,8 @@ class Repo extends Component {
   }
 }
 
-Repo = connect((state) => {
-  return state;
-})(Repo);
+Repo = connect((state) => ({
+  settings: { theme: state.settings.theme },
+}))(Repo);
 
 export default Repo;
