@@ -4,7 +4,7 @@ import '../../node_modules/animate.css/animate.min.css';
 import '../assets/scss/app.css';
 import Header from './header';
 import ErrorBoundary from './errorBoundary';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import app from '../../package.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,28 +21,28 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    if (moment(props.repos.cacheDate).diff(moment(), 'hours') < -12) {
+    if (dayjs(props.repos.cacheDate).diff(dayjs(), 'hour') < -12) {
       props.setRepos([]);
-      props.setToDate(moment());
+      props.setToDate(dayjs());
     }
   }
 
   fetchRepos = () => {
     const lastRepo = this.props.repos.repos[this.props.repos.repos.length - 1];
-    const to = lastRepo ? moment(lastRepo.since) : moment();
+    const to = lastRepo ? dayjs(lastRepo.since) : dayjs();
 
     const since = ((period) => {
       switch (period) {
         case PERIOD.DAILY:
-          return to.clone().subtract(1, 'days');
+          return to.subtract(1, 'day');
         case PERIOD.WEEKLY:
-          return to.clone().subtract(1, 'weeks');
+          return to.subtract(1, 'week');
         case PERIOD.MONTHLY:
-          return to.clone().subtract(1, 'months');
+          return to.subtract(1, 'month');
         case PERIOD.YEARLY:
-          return to.clone().subtract(1, 'years');
+          return to.subtract(1, 'year');
         default:
-          return moment();
+          return dayjs();
       }
     })(this.props.settings.period);
 

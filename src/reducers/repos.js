@@ -1,12 +1,12 @@
 import { requestRepos, setRepos, receiveRepos, tryAgain, setToDate, throwError } from '../actions/repos';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { handleActions } from 'redux-actions';
 
 const init = {
   fetching: false,
   error: null,
   repos: [],
-  cacheDate: moment(),
+  cacheDate: dayjs(),
 };
 
 export default handleActions(
