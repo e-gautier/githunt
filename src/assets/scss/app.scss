@@ -22,6 +22,10 @@ body,
     background-color: $dark-card-color;
   }
 
+  .card-text {
+    color: $dark-font-color;
+  }
+
   a,
   a:hover {
     color: #888888;
@@ -43,6 +47,11 @@ body,
   .form-select:focus {
     background-color: $dark-background-color;
     border-color: $dark-card-color;
+  }
+
+  .form-control::placeholder {
+    color: $dark-font-color;
+    opacity: 0.6;
   }
 }
 

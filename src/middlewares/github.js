@@ -15,7 +15,9 @@ export const GITHUB_API = 'https://api.github.com';
  * @returns {Promise<any>}
  */
 export async function fetchRepos(sort, language, repoAmount, since, to, username = '', accessToken = '') {
-  let headers = new Headers({ Authorization: `Basic ${Buffer.from(`${username}:${accessToken}`).toString('base64')}` });
+  let headers = new Headers({
+    Authorization: `Basic ${Buffer.from(`${username}:${accessToken}`).toString('base64')}`,
+  });
   const languageQuery = language ? ` language:${language}` : '';
   const response = await fetch(
     `${GITHUB_API}/search/repositories?sort=${sort}&q=created:${since.format('YYYY-MM-DD')}..${
@@ -38,10 +40,12 @@ export async function fetchRepos(sort, language, repoAmount, since, to, username
  * @returns {Promise<any>}
  */
 export async function isAccessTokenValid(username, token) {
-  let headers = new Headers({ Authorization: `Basic ${Buffer.from(`${username}:${token}`).toString('base64')}` });
+  let headers = new Headers({
+    Authorization: `Basic ${Buffer.from(`${username}:${token}`).toString('base64')}`,
+  });
   const response = await fetch(`${GITHUB_API}`, { headers });
   if (!response.ok) {
-    throw Error(response.messageText);
+    throw Error(response.statusText);
   }
   return response.json();
 }

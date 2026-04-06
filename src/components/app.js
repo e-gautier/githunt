@@ -82,14 +82,19 @@ class App extends Component {
       </div>
     ));
 
-    const loader = (
+    const error = this.props.repos.error;
+
+    const loader = error ? (
+      <div className="loader-small" key={0}>
+        <span>{error}</span>
+        <br />
+        <button onClick={() => this.props.tryAgain()}>try again</button>
+      </div>
+    ) : (
       <div className="loader-small" key={0}>
         <FontAwesomeIcon icon={faSyncAlt} spin />
         &nbsp;
         <strong>Wait, hunting them down...</strong>
-        <br />
-        <span>{this.props.repos.error}</span>
-        <span>{this.props.repos.error && <button onClick={() => this.props.tryAgain()}>try again</button>}</span>
       </div>
     );
 
@@ -124,8 +129,8 @@ class App extends Component {
               <div className="animated fadeIn">
                 <InfiniteScroll
                   pageStart={0}
-                  loadMore={() => this.props.repos.error || this.props.repos.fetching || this.fetchRepos()}
-                  hasMore={true}
+                  loadMore={() => this.props.repos.fetching || this.fetchRepos()}
+                  hasMore={!error}
                   loader={loader}
                 >
                   {rows}
