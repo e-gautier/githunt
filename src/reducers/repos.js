@@ -6,7 +6,7 @@ const init = {
   fetching: false,
   error: null,
   repos: [],
-  cacheDate: moment()
+  cacheDate: moment(),
 };
 
 export default handleActions(
@@ -14,7 +14,7 @@ export default handleActions(
     [throwError]: (state, action) => {
       return { ...state, error: action.payload };
     },
-    [tryAgain]: state => {
+    [tryAgain]: (state) => {
       return { ...state, fetching: false, error: null };
     },
     [setRepos]: (state, action) => {
@@ -23,16 +23,16 @@ export default handleActions(
     [setToDate]: (state, action) => {
       return { ...state, cacheDate: action.payload };
     },
-    [requestRepos]: state => {
+    [requestRepos]: (state) => {
       return { ...state, fetching: true };
     },
     [receiveRepos]: (state, action) => {
       return {
         ...state,
         repos: [...state.repos, action.payload],
-        fetching: false
+        fetching: false,
       };
-    }
+    },
   },
   init
 );

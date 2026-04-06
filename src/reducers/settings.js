@@ -7,7 +7,7 @@ import {
   setLanguage,
   setReposPoolSize,
   setUsername,
-  setPersonalAccessToken
+  setPersonalAccessToken,
 } from '../actions/settings';
 import { handleActions } from 'redux-actions';
 
@@ -16,7 +16,7 @@ const init = {
   period: PERIOD.DAILY,
   language: '',
   repoAmount: REPOS_POOL_SIZE.THIRTY,
-  accessToken: ''
+  accessToken: '',
 };
 
 export default handleActions(
@@ -38,7 +38,7 @@ export default handleActions(
     },
     [setUsername]: (state, action) => {
       return { ...state, username: action.payload };
-    }
+    },
   },
   init
 );

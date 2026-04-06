@@ -11,7 +11,7 @@ export const { throwError, tryAgain, setRepos, setToDate, requestRepos, receiveR
 );
 
 export function fetchRepos(sort, language, repoAmount, since, to, username = '', accessToken = '') {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestRepos());
     try {
       const body = await github.fetchRepos(sort, language, repoAmount, since, to, username, accessToken);
@@ -19,7 +19,7 @@ export function fetchRepos(sort, language, repoAmount, since, to, username = '',
         receiveRepos({
           items: body.items,
           since: since.clone(),
-          to: to.clone()
+          to: to.clone(),
         })
       );
     } catch (error) {

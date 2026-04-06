@@ -31,7 +31,7 @@ class App extends Component {
     const lastRepo = this.props.repos.repos[this.props.repos.repos.length - 1];
     const to = lastRepo ? moment(lastRepo.since) : moment();
 
-    const since = (period => {
+    const since = ((period) => {
       switch (period) {
         case PERIOD.DAILY:
           return to.clone().subtract(1, 'days');
@@ -64,7 +64,7 @@ class App extends Component {
           <Date since={repos.since} to={repos.to} />
         </div>
         <div className="row">
-          {repos.items.map(repo => (
+          {repos.items.map((repo) => (
             <Repo
               key={repo.id}
               fullName={repo.full_name}
@@ -101,7 +101,7 @@ class App extends Component {
       transitionDuration: '0.2s',
       transitionTimingFunction: 'linear',
       transitionDelay: '0s',
-      zIndex: 1
+      zIndex: 1,
     };
 
     return (
@@ -140,14 +140,14 @@ class App extends Component {
 }
 
 App = connect(
-  state => {
+  (state) => {
     return state;
   },
   {
     tryAgain,
     fetchRepos,
     setRepos,
-    setToDate
+    setToDate,
   }
 )(App);
 
