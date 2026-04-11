@@ -2,6 +2,9 @@
   "name": "githunt",
   "version": "1.6.1",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "homepage": ".",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.0",
@@ -60,7 +63,7 @@
     "yaml@>=2": "2.8.3",
     "serialize-javascript": "7.0.5",
     "nth-check": "2.1.1",
-    "postcss": "8.5.4",
+    "postcss": "8.5.8",
     "@tootallnate/once": "3.0.1",
     "underscore": "1.13.8"
   },
