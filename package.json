@@ -1,6 +1,6 @@
 {
   "name": "githunt",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "private": true,
   "homepage": ".",
   "dependencies": {
@@ -47,7 +47,9 @@
     "deploy": "gh-pages -d build",
     "build-css": "sass src/:src/",
     "watch-css": "npm run build-css && sass src/:src/ --watch",
-    "package": "npm run build && cd build && zip -r ../githunt-$npm_package_version.zip ."
+    "package": "npm run build && cd build && zip -r ../githunt-$npm_package_version.zip .",
+    "package:source": "zip -r githunt-$npm_package_version-source.zip . -x '.git/*' 'node_modules/*' 'build/*' '*.zip' 'src/assets/scss/*.css' 'src/assets/scss/*.css.map' '.github/*'",
+    "package:all": "npm run package && npm run package:source"
   },
   "browserslist": [
     ">0.2%",
