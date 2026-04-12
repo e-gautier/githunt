@@ -30,11 +30,13 @@
 
 Then submit or pack (as zip) the build folder.
 
-Or use the package command to build and zip in one step:
+Or use the package commands to build and zip in one step:
 
-`npm run package`
+`npm run package` - creates `githunt-<version>.zip` (extension archive for store submission)
 
-This creates a `githunt-<version>.zip` ready to be submitted to the Chrome Web Store or Firefox Add-ons.
+`npm run package:source` - creates `githunt-<version>-source.zip` (source archive for addon review)
+
+`npm run package:all` - creates both archives at once
 
 ## Deploy on Github pages
 
